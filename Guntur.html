@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Travel Destination Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(to right, #f3f4f6, #e5e7eb);
+            font-family: 'Inter', sans-serif;
+        }
+        .card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .category-btn {
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .category-btn.selected {
+            background-color: #3b82f6;
+            color: white;
+        }
+        .search-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+        }
+        a.more-info {
+            color: #2563eb;
+            font-weight: 600;
+            text-decoration: underline;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+        a.more-info:hover {
+            color: #1d4ed8;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="bg-gradient-to-r from-blue-500 to-purple-600 text-white py-8">
+        <div class="container mx-auto text-center px-4">
+            <h1 class="text-4xl font-bold mb-2">Explore Travel Destinations</h1>
+            <p class="text-lg max-w-3xl mx-auto">
+                Discover amazing temples, tourist spots, beaches, caves, forts, and waterfalls
+            </p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <section class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+            <div>
+                <h2 class="text-2xl font-semibold mb-4">Choose Your Interests</h2>
+                <div class="flex flex-wrap gap-2">
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="all">All</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="temples">Temples</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="tourist-places">Tourist Places</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="forts">Forts</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="waterfalls">Waterfalls</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="beaches">Beaches</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="caves">Caves</button>
+                </div>
+            </div>
+            <div class="w-full md:w-64">
+                <input type="text" id="search-input" placeholder="Search destinations..." class="search-input w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-500" />
+            </div>
+        </section>
+
+        <section class="destinations">
+            <div id="destinations-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-6 mt-12">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 Travel Destination Explorer. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const destinations = [
+            {
+                category: "temples",
+                name: "Sri Agastheswar Swamy Temple",
+                description: "An ancient temple dedicated to lord shiva , the temple's origins are steeped in legend",
+                img: "https://myadhyatm.com/wp-content/uploads/2025/01/6-143-500x445.jpg",
+                imgAlt: "Golden temple structure with intricate carvings and tall gopuram against blue sky",
+                moreInfo: "/home/pravalika/Desktop/Guntur/agastheswar.html"
+            },
+            {
+                category: "temples",
+                name: "Panakala Lakshmi Narasimha Awamy Temple",
+                description: "An ancient temple dedicated to lord narasimha , the temple's origins are steeped in legend",
+                img: "https://upload.wikimedia.org/wikipedia/commons/7/7a/Diguva_mangalagiri_temple_guntur_dist_AP.jpg",
+                imgAlt: "Colorful Hindu temple with detailed sculptures and decorative elements",
+                moreInfo: "/home/pravalika/Desktop/Guntur/narasimhamangalagiri.html"
+            },
+            {
+                category: "temples",
+                name: "Amara Lingeswara Temple",
+                description: "An ancient temple dedicated to lord shiva , the temple's origins are steeped in legend",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkuZhzKjDC8IqfvS15dofJAmJVYeBF-e01Eg&s",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/Guntur/amara.html"
+            },
+            
+            {
+                category: "temples",
+                name: "Sri Chandramukha Bramha Lingeswara Temple",
+                description: "An ancient temple dedicated to lord shiva , the temple's origins are steeped in legend",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREqilsxMNtyhTiALnLMIVE8Tny_cbny3jRKLhM8gBrrfSdZSwfS1_cJArQdoZ5Iz6qZSE&usqp=CAU",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/Guntur/chandramukha.html"
+            },
+            {
+                category: "temples",
+                name: "Sahasra Lingeswara Temple",
+                description: "An ancient temple dedicated to lord shiva , the temple's origins are steeped in legend",
+                img: "https://holyshrines.in/wp-content/uploads/2020/10/jammulapalem-Copy-350x250.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/Guntur/sahasra.html"
+            },
+            {
+                category: "temples",
+                name: "Sri Dasavathara Venkateswara Swamy Temple",
+                description: "An ancient temple dedicated to lord venkateswara , the temple's origins are steeped in legend",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRb72PRhdKciCPcOaoIOnuwYuQ6eS8LzctRXezMXHcP8HqCBN8JM8UFxOBcRU8iIL5nIXw&usqp=CAU",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/Guntur/dasavathara.html"
+            },
+            {
+                category: "temples",
+                name: "Sri Venkateswara Swamy Temple ,Tenali",
+                description: "An ancient temple dedicated to Lord venkateswara,known for its unique architecture and serene location amidst natural beauty.",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx1RiP1OiNhxO0ud3LxtqauuXz_WDNZ905ig&s",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/Guntur/venkateswara.html"
+            },
+            
+            {
+                category: "temples",
+                name: "Sri Panchamukha Anjaneya Swamy Temple",
+                description: "An ancient temple dedicated to lord shiva , the temple's origins are steeped in legend",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqfWNnYXssj0PmHA7ZytVRdj59cUdlrHRkO-FJtDxdrOQHMJoZv-1QpkGE19frxHkiq88&usqp=CAU",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/Guntur/anjaneya.html"
+            },
+           
+            {
+                category: "tourist-places",
+                name: "nagarjuna sagar dam",
+                description: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrrp-0iuRdV-hs2Vz8SS_fUs_KTAWjXfPnXdw2mF7FHuOKPc_5LxrNSXRzXkT84ggE8J0&usqp=CAU",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrrp-0iuRdV-hs2Vz8SS_fUs_KTAWjXfPnXdw2mF7FHuOKPc_5LxrNSXRzXkT84ggE8J0&usqp=CAU",
+                imgAlt: "Green hills with trekking paths and natural scenery",
+                moreInfo: "/home/pravalika/Desktop/Guntur/nagarjuna sagar.html"
+            },
+            {
+                category: "tourist-places",
+                name: "uppalapadu bird sanctuary",
+                description: "A serene heaven for bird species in a peaceful setting.",
+                img:"https://images.nativeplanet.com/img/2018/05/uppalapadubirdsanctuary1-1525856035.jpg",
+                imgAlt: "Green hills with trekking paths and natural scenery",
+                moreInfo: "/home/pravalika/Desktop/Guntur/uppalapadu.html"
+            },
+            {
+                category: "beaches",
+                name: "Bapatla Beach",
+                description: "A serene and pictureaque beach where the river meets the Bay of Bengal,known for its golden sands and tranquil waters.",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyNNBZT9jf2_dUcbCXjW35vqbC2bwz-lfilA&s",
+                imgAlt: "Ancient stone fort on a hill with historical architecture",
+                moreInfo: "/home/pravalika/Desktop/Guntur/bapatla beach.html"
+            },
+            {
+                category: "caves",
+                name: "Undavalli Caves",
+                description: "Majestic caves surrounded with hills,known for its pleasant atmosphere",
+                img: "https://s7ap1.scene7.com/is/image/incredibleindia/1-undavalli-caves-guntur-andhra-pradesh-attr-hero?qlt=82&ts=1726743723061",
+                imgAlt: "Historic hill fort with stone walls and strategic location",
+                moreInfo: "/home/pravalika/Desktop/Guntur/undavalli.html"
+            },
+            {
+                category: "caves",
+                name: "Guthikonda Caves",
+                description: "Majestic caves surrounded with hills,known for its pleasant atmosphere",
+                img: "https://www.indianholiday.com/wordpress/wp-content/uploads/2025/04/yaganti-caves-yaganti-2184.jpeg",
+                imgAlt: "Historic hill fort with stone walls and strategic location",
+                moreInfo: "/home/pravalika/Desktop/Guntur/guthikondacaves.html"
+            },
+            {
+                category: "caves",
+                name: "Guntupalli Buddist Caves",
+                description: "Majestic caves surrounded with hills,known for its pleasant atmosphere",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqfguc0C98UY9G3bA0w3nfXjsz0WNAUnmC9g&s",
+                imgAlt: "Historic hill fort with stone walls and strategic location",
+                moreInfo: "/home/pravalika/Desktop/Guntur/guntupalli Buddist caves.html"
+            },
+            
+            {
+                category: "waterfalls",
+                name: "Ethipothala Waterfalls ",
+                description: "A capivating waterfalls nestled amidst lush greenery,offering a refreshing and scenic natural retreat.",
+                img: "https://img.traveltriangle.com/blog/wp-content/uploads/2025/02/Ethipothala-Falls.jpg",
+                imgAlt: "Historic hill fort with stone walls and strategic location",
+                moreInfo: "/home/pravalika/Desktop/Guntur/ethipothalawaterfalls.html"
+            },
+              {
+                category: "forts",
+                name:"Kondaveedu Fort",
+                description: "A Stunning forts sourrounded by dense forests,providing a serene and picturesque escape into nature.",
+                img: "https://www.touristplaces.net.in/images/pp/7/p143647.jpg",
+                imgAlt: "Historic hill fort with stone walls and strategic location",
+                moreInfo: "/home/pravalika/Desktop/Guntur/kondaveedu Fort.html"
+            },
+             {
+                category: "forts",
+                name:"Bellamkonda Fort",
+                description: "A Stunning forts sourrounded by dense forests,providing a serene and picturesque escape into nature.",
+                img: "https://content.jdmagicbox.com/comp/krishna/z9/9999p8676.8676.141219135851.q1z9/catalogue/kondapalli-fort-kondapalli-krishna-tourist-attraction-fazdkti41g.jpg",
+                imgAlt: "Historic hill fort with stone walls and strategic location",
+                moreInfo: "/home/pravalika/Desktop/Guntur/bellamkonda fort.html"
+            },
+              
+          ];
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        const searchInput = document.getElementById('search-input');
+        const destinationsGrid = document.getElementById('destinations-grid');
+        let selectedCategories = new Set(['all']);
+        let searchTerm = '';
+
+        function updateDestinations() {
+            destinationsGrid.innerHTML = '';
+            
+            const filtered = destinations.filter(dest => {
+                const categoryMatch = selectedCategories.has('all') || selectedCategories.has(dest.category);
+                const searchMatch = searchTerm === '' || 
+                                  dest.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                                  dest.description.toLowerCase().includes(searchTerm.toLowerCase());
+                return categoryMatch && searchMatch;
+            });
+            
+            if (filtered.length === 0) {
+                destinationsGrid.innerHTML = '<p class="text-center col-span-full text-gray-500 py-8">No destinations found matching your criteria.</p>';
+                return;
+            }
+            
+            filtered.forEach(dest => {
+                const card = document.createElement('div');
+                card.className = 'card bg-white rounded-lg shadow-md overflow-hidden';
+                card.innerHTML = `
+                    <div class="card-image">
+                        <img src="${dest.img}" alt="${dest.imgAlt}" class="w-full h-48 object-cover" loading="lazy" />
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold mb-2 capitalize">${dest.name}</h3>
+                        <p class="text-gray-600 mb-2">${dest.description}</p>
+                        <a href="${dest.moreInfo}" target="_blank" rel="noopener noreferrer" class="more-info">More Info</a>
+                        <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full capitalize ml-2">${dest.category}</span>
+                    </div>
+                `;
+                destinationsGrid.appendChild(card);
+            });
+        }
+
+        // Category button event listeners
+        categoryButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const category = btn.dataset.category;
+                
+                if (category === 'all') {
+                    selectedCategories.clear();
+                    selectedCategories.add('all');
+                    categoryButtons.forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                } else {
+                    selectedCategories.delete('all');
+                    if (selectedCategories.has(category)) {
+                        selectedCategories.delete(category);
+                        btn.classList.remove('selected');
+                        
+                        // If no categories selected, show all
+                        if (selectedCategories.size === 0) {
+                            selectedCategories.add('all');
+                            document.querySelector('[data-category="all"]').classList.add('selected');
+                        }
+                    } else {
+                        selectedCategories.add(category);
+                        btn.classList.add('selected');
+                    }
+                }
+                
+                updateDestinations();
+            });
+        });
+
+        // Search functionality
+        searchInput.addEventListener('input', (e) => {
+            searchTerm = e.target.value;
+            updateDestinations();
+        });
+
+        // Initialize with all destinations
+        document.querySelector('[data-category="all"]').classList.add('selected');
+        updateDestinations();
+    </script>
+</body>
+</html>

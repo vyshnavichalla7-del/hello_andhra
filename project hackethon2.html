@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Travel Destination Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(to right, #f3f4f6, #e5e7eb);
+            font-family: 'Inter', sans-serif;
+        }
+        .card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .category-btn {
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .category-btn.selected {
+            background-color: #3b82f6;
+            color: white;
+        }
+        .search-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+        }
+        a.more-info {
+            color: #2563eb;
+            font-weight: 600;
+            text-decoration: underline;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+        a.more-info:hover {
+            color: #1d4ed8;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="bg-gradient-to-r from-blue-500 to-purple-600 text-white py-8">
+        <div class="container mx-auto text-center px-4">
+            <h1 class="text-4xl font-bold mb-2">Explore Travel Destinations</h1>
+            <p class="text-lg max-w-3xl mx-auto">
+                Discover amazing temples, tourist spots, beaches, caves, forts, and waterfalls
+            </p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <section class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+            <div>
+                <h2 class="text-2xl font-semibold mb-4">Choose Your Interests</h2>
+                <div class="flex flex-wrap gap-2">
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="all">All</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="temples">Temples</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="tourist-places">Tourist Places</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="forts">Forts</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="waterfalls">Waterfalls</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="beaches">Beaches</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="caves">Caves</button>
+                </div>
+            </div>
+            <div class="w-full md:w-64">
+                <input type="text" id="search-input" placeholder="Search destinations..." class="search-input w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-500" />
+            </div>
+        </section>
+
+        <section class="destinations">
+            <div id="destinations-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-6 mt-12">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 Travel Destination Explorer. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const destinations = [
+            // Temples
+            {
+                category: "temples",
+                name: "Sri Pydithalli Ammavari Temple",
+                description: "Pydithalli Ammavari temple is a famous temple located in vizayanagaram,Andra Pradesh dedicated to Goddess Pydithalli Ammavaru,the family of the Vizayanagaram royal family.",
+                img: "https://content.jdmagicbox.com/comp/vizianagaram/g9/9999p8922.8922.180304144153.t1g9/catalogue/sri-sri-sri-pydithalli-ammavari-devasthanam-vizianagaram-ho-vizianagaram-temples-d7w8e1reip.jpg",
+                imgAlt: "Golden temple structure with intricate carvings and tall gopuram against blue sky",
+                moreInfo: "/home/pravalika/Desktop/Hello Andhra/pydithalli ammavaru.html"
+            },
+            {
+                category: "temples",
+                name: "Ramanarayanam",
+                description: "Ramanarayan Temple is a Spiritual theme park located near Vizayanagaram,Andra Pradesh,designed in the shape of a bow and a arrow,dedicated to Lord Rama and Hanuman.",
+                img: "https://media-cdn.tripadvisor.com/media/photo-s/0c/40/bd/6c/ramayanam-temple.jpg",
+                imgAlt: "Colorful Hindu temple with detailed sculptures and decorative elements",
+                moreInfo: "/home/pravalika/Desktop/Hello Andhra/Ramanarayam.html"
+            },
+            {
+                category: "temples",
+                name: "Gnanasaraswathi Temple",
+                description: "Gnanasaraswathi Temple is a sacred temple dedicated to Goddess Saraswathi is located in vizayanagaram.",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsz2mjoqeer8r7xZu5j5ifZOQUCLqijHoK1g&s",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/Hello Andhra/Gnanasaraswathi.html"
+            },
+            {
+                category: "temples",
+                name: "Ramatheertham Temple",
+                description: "Ramatheertham temple is an ancient Hindu Temple near Vizayanagaram,Andra Pradesh dedicated to Lord Rama,situated atop a scenic hill.",
+                img: "https://www.aartigyan.com/Images/TampleImages/1536410876sacred.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/Hello Andhra/ramatheerdham.html"
+            },
+            {
+                category: "temples",
+                name: "Govindapuram Temple",
+                description: "Govindapuram Temple in vizayanagaram is dedicated to lord Venkateswara(Krishna)and its famous for its massive chariot-shaped structure.",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_v316buiLhfkHm9pdNlueYtVWEWHRVpR3-CwFnIxzNygU32jeQMtiTZcg9RjUKimAOR4&usqp=CAU",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/Hello Andhra/govindapram.html"
+            },
+            {
+                category: "temples",
+                name: "Rega Punyagiri Temple",
+                description: "Rega Punyagiri Temple near Srungavarapukota Vizayanagaram is an hilltop shrine dedicated to Lord Shiva,known for its sacred underground spring.",
+                img: "https://travellerkaka.com/wp-content/uploads/2024/09/Untitled-design-98-1.png",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/Hello Andhra/rega.html"
+            },
+            
+            
+            // Tourist Places
+            {
+                category: "tourist-places",
+                name: "Thadipudi Reservior",
+                description: "Thadipudu Reservior,located near Srungavarapukota in vizayanagaram dist, is a scenic dam built across the Gosthani River.",
+                img: "https://travellerkaka.com/wp-content/uploads/2024/09/Untitled-design-96-1.png.webp",
+                imgAlt: "Scenic hill station with green mountains and misty valleys",
+                moreInfo: "/home/pravalika/Desktop/Hello Andhra/thadipudi.html"
+            },
+            
+            
+            // Forts
+            {
+                category: "forts",
+                name: "Vizayanagram  Fort",
+                description: "Vizayanagaram fort,builts in 1713 by maharaja Vijaya Rama Raju,is a historic fort in vizayanagaram known for its Square layout and grand architecture.",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRun-OJfY4CpTfsgI1QFouF3CuPh5se4lr58g&s",
+                imgAlt: "Ancient stone fort on a hill with historical architecture",
+                moreInfo: "/home/pravalika/Desktop/Hello Andhra/Vfort.html"
+            },
+            {
+                category: "forts",
+                name: "Bobbili Fort",
+                description: "The Bobbili Fort,located in Bobbili ,Andra Pradesh was constructed in the mid 19th century by chinna ranga rao,a surviour of the historic Battle of Bbbili in 1.",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7yjFk0evsGMU0Ws6SbXbo1XX_flrP_np_wQ&s",
+                imgAlt: "Historic hill fort with stone walls and strategic location",
+                moreInfo: "/home/pravalika/Desktop/Hello Andhra/bobbili.html"
+            },
+             
+            
+          ];
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        const searchInput = document.getElementById('search-input');
+        const destinationsGrid = document.getElementById('destinations-grid');
+        let selectedCategories = new Set(['all']);
+        let searchTerm = '';
+
+        function updateDestinations() {
+            destinationsGrid.innerHTML = '';
+            
+            const filtered = destinations.filter(dest => {
+                const categoryMatch = selectedCategories.has('all') || selectedCategories.has(dest.category);
+                const searchMatch = searchTerm === '' || 
+                                  dest.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                                  dest.description.toLowerCase().includes(searchTerm.toLowerCase());
+                return categoryMatch && searchMatch;
+            });
+            
+            if (filtered.length === 0) {
+                destinationsGrid.innerHTML = '<p class="text-center col-span-full text-gray-500 py-8">No destinations found matching your criteria.</p>';
+                return;
+            }
+            
+            filtered.forEach(dest => {
+                const card = document.createElement('div');
+                card.className = 'card bg-white rounded-lg shadow-md overflow-hidden';
+                card.innerHTML = `
+                    <div class="card-image">
+                        <img src="${dest.img}" alt="${dest.imgAlt}" class="w-full h-48 object-cover" loading="lazy" />
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold mb-2 capitalize">${dest.name}</h3>
+                        <p class="text-gray-600 mb-2">${dest.description}</p>
+                        <a href="${dest.moreInfo}" target="_blank" rel="noopener noreferrer" class="more-info">More Info</a>
+                        <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full capitalize ml-2">${dest.category}</span>
+                    </div>
+                `;
+                destinationsGrid.appendChild(card);
+            });
+        }
+
+        // Category button event listeners
+        categoryButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const category = btn.dataset.category;
+                
+                if (category === 'all') {
+                    selectedCategories.clear();
+                    selectedCategories.add('all');
+                    categoryButtons.forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                } else {
+                    selectedCategories.delete('all');
+                    if (selectedCategories.has(category)) {
+                        selectedCategories.delete(category);
+                        btn.classList.remove('selected');
+                        
+                        // If no categories selected, show all
+                        if (selectedCategories.size === 0) {
+                            selectedCategories.add('all');
+                            document.querySelector('[data-category="all"]').classList.add('selected');
+                        }
+                    } else {
+                        selectedCategories.add(category);
+                        btn.classList.add('selected');
+                    }
+                }
+                
+                updateDestinations();
+            });
+        });
+
+        // Search functionality
+        searchInput.addEventListener('input', (e) => {
+            searchTerm = e.target.value;
+            updateDestinations();
+        });
+
+        // Initialize with all destinations
+        document.querySelector('[data-category="all"]').classList.add('selected');
+        updateDestinations();
+    </script>
+</body>
+</html>

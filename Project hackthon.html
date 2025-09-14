@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Travel Destination Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(to right, #f3f4f6, #e5e7eb);
+            font-family: 'Inter', sans-serif;
+        }
+        .card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .category-btn {
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .category-btn.selected {
+            background-color: #3b82f6;
+            color: white;
+        }
+        .search-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+        }
+        a.more-info {
+            color: #2563eb;
+            font-weight: 600;
+            text-decoration: underline;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+        a.more-info:hover {
+            color: #1d4ed8;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="bg-gradient-to-r from-blue-500 to-purple-600 text-white py-8">
+        <div class="container mx-auto text-center px-4">
+            <h1 class="text-4xl font-bold mb-2">Explore Travel Destinations</h1>
+            <p class="text-lg max-w-3xl mx-auto">
+                Discover amazing temples, tourist spots, beaches, caves, forts, and waterfalls
+            </p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <section class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+            <div>
+                <h2 class="text-2xl font-semibold mb-4">Choose Your Interests</h2>
+                <div class="flex flex-wrap gap-2">
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="all">All</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="temples">Temples</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="tourist-places">Tourist Places</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="forts">Forts</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="waterfalls">Waterfalls</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="beaches">Beaches</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="caves">Caves</button>
+                </div>
+            </div>
+            <div class="w-full md:w-64">
+                <input type="text" id="search-input" placeholder="Search destinations..." class="search-input w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-500" />
+            </div>
+        </section>
+
+        <section class="destinations">
+            <div id="destinations-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-6 mt-12">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 Travel Destination Explorer. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const destinations = [
+            // Temples
+            {
+                category: "temples",
+                name: "Sri Suryanarayana swamy temple (Arasavilli)",
+                description: "An Ancient marvel where sunlight touches lord Vishnus feet Twice a year,showcasing divine architecture and spiriutal wounder",
+                img: "https://travelsetu.com/apps/uploads/new_destinations_photos/destination/2024/01/01/242f341956d164c4a79f475e800b797d_1000x1000.jpg",
+                imgAlt: "Golden temple structure with intricate carvings and tall gopuram against blue sky",
+                moreInfo: "/home/pravalika/Desktop/Hello Andhra/Arasavilli.html"
+            },
+            {
+                category: "temples",
+                name: "Sri Mukhalingam",
+                description: "A stunning ancient temple dedicated to lord Shiva, famous for its intricate carvings and magnificant Dravidian architecture.",
+                img: "https://th-i.thgim.com/public/news/national/andhra-pradesh/tdjnil/article34347515.ece/alternates/FREE_1200/19vjtemple",
+                imgAlt: "Colorful Hindu temple with detailed sculptures and decorative elements",
+                moreInfo: "/home/pravalika/Desktop/Hello Andhra/Sri mukhalingam.html"
+            },
+            {
+                category: "temples",
+                name: "Sri Kurma Nadhaswamy temple",
+                description: "AN ancient and unique temple dedicated to lord vishnu in his Kurma(Tortoise) avathar ,symbolizing stability and cosmic support.",
+                img: "https://d3sftlgbtusmnv.cloudfront.net/blog/wp-content/uploads/2024/09/Kurmanatha-Swamy-Temple-840x425.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/Hello Andhra/sri kurmam.html"
+            },
+            
+            {
+                category: "temples",
+                name: "Mandasa Vasueva Perumal Temple",
+                description: "A sacred temple dedicated to Lord Vasudeva(Lord Krishna),Known for its peaceful ambiance and ancient Spiritual Significance.",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTla0eLLV60gnZusHRZgjYTK9s84O2BUnr-cA&s",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/Hello Andhra/mandasa.html"
+            },
+            {
+                category: "temples",
+                name: " Pydithalli Ammavari Temple",
+                description: "A revered temple dedicated to Goddess Pydithalli Ammavari, attracting devotees for its powerful spiritual enenry and cultural imporatnace",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp6PB4JiY8KlK5HtpTOvs32wcDDSol8nTEoQ&s",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "h/home/pravalika/Desktop/Hello Andhra/Pydithalli.html"
+            },
+            {
+                category: "temples",
+                name: "Sri Sai Giri temple",
+                description: "A peaceful temple dedicated to Sai Baba,offering a severe spiritual atmosphere that attracts devotees seeking blessings and inner peace.",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRohyyfB4D1IxgKuf1eHTKnAUeKO8ijKc8StA&s",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/Hello Andhra/saigiri.html"
+            },
+            {
+                category: "temples",
+                name: " Umarudra Koteswara Temple",
+                description: "An ancient temple dedicated to Lord Shiva,known for its unique architecture and serene location amidst natural beauty.",
+                img: "https://xploreall.com/wp-content/uploads/2021/11/umarudra-Lord-Shiva-300x300.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/Hello Andhra/umarudra.html"
+            },
+            
+            {
+                category: "temples",
+                name: "Sri Umagiri Temple",
+                description: "An ancient and sacred temple dedicated to Godess Uma (parvathi),known for its peaceful atmosphere and religious imporatance.",
+                img: "https://content.jdmagicbox.com/v2/comp/srikakulam/w6/9999p8942.8942.221224212839.z9w6/catalogue/umagiri-temple-sarangapuram-srikakulam-temples-n20hLs2imq.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/Hello Andhra/srumagiri.html"
+            },
+            {
+                category: "temples",
+                name: " Sri Devi Asram",
+                description: "A sacred shrine dedicated to Goddess Durga attracting devotees for its powerful spiritual presence and traditional worship practice.",
+                img: "https://img1.wsimg.com/isteam/ip/4df5a4b4-7bdc-412b-ba55-b04ea41c4e9d/960.jpeg/:/cr=t:0%25,l:0%25,w:100%25,h:100%25/rs=w:600,cg:true",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/Hello Andhra/sridevi.html"
+            },
+            
+            
+            
+            // Tourist Places
+           
+            {
+                category: "tourist-places",
+                name: "Salihudam",
+                description: "An important archaeological site with ancient ruins and artifacts, offering a fascinsting glimpse into early human civilization.",
+                img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/2nd_century_BCE_to_8th_century_CE_Salihundam_Buddhist_site%2C_Andhra_Pradesh_-_54.jpg/1280px-2nd_century_BCE_to_8th_century_CE_Salihundam_Buddhist_site%2C_Andhra_Pradesh_-_54.jpg",
+                imgAlt: "Green hills with trekking paths and natural scenery",
+                moreInfo: "/home/pravalika/Desktop/Hello Andhra/salihudam.html"
+            },
+            {
+                category: "tourist-places",
+                name: "Telineelipuram Bird Sanctuary",
+                description: "A serene heaven for bird species in a peaceful setting.",
+                img: "https://th-i.thgim.com/public/incoming/fdjvi6/article68949634.ece/alternates/LANDSCAPE_1200/IMG_Migratory_Birds_2_1_E1DIQTIA.jpg",
+                imgAlt: "Green hills with trekking paths and natural scenery",
+                moreInfo: "/home/pravalika/Desktop/Hello Andhra/telineelipuram.html"
+            },
+            {
+                category: "tourist-places",
+                name: "Telukonchi Bird Sanctuary",
+                description: "A vibrant attracting migratory and local birds, making it a paradise for bird watchers and natural lovers.",
+                img: "https://travelsetu.com/apps/uploads/new_destinations_photos/destination/2024/01/01/a3a36157de62d76e7a7edf17552e7db4_1000x1000.png",
+                imgAlt: "Green hills with trekking paths and natural scenery",
+                moreInfo: "/home/pravalika/Desktop/Hello Andhra/telukonchi.html"
+            },
+             {
+                category: "tourist-places",
+                name: "Diamond Park",
+                description: "A wellmaintained recreational park offering lush greenery,walking paths, and a peaceful environment for relaxation.",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsgtOJcQucy73wVhT1n_WhtLncM-5i3XeWbg&s",
+                imgAlt: "Green hills with trekking paths and natural scenery",
+                moreInfo: "/home/pravalika/Desktop/Hello Andhra/diamondpark.html"
+            },
+             {
+                category: "tourist-places",
+                name: "Nagavali River View Prak",
+                description: "A scenic riverside park offering breathtaking views of the Nagavali river view and a peaceful environment for relaxation.",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReenlUhel-JqyM8PxIXAxW1xBOsyw0upxgEw&s",
+                imgAlt: "Green hills with trekking paths and natural scenery",
+                moreInfo: "/home/pravalika/Desktop/Hello Andhra/nagavali.html"
+            },
+            // Beaches
+            {
+                category: "beaches",
+                name: "Kalingapatnam Beach",
+                description: "A serene and pictureaque beach where the river meets the Bay of Bengal,known for its golden sands and tranquil waters.",
+                img: "https://travelsetu.com/apps/uploads/new_destinations_photos/destination/2024/01/01/13e3e512d92d80e1b1c3330ad709d6dd_1000x1000.jpg",
+                imgAlt: "Ancient stone fort on a hill with historical architecture",
+                moreInfo: "/home/pravalika/Desktop/Hello Andhra/kalingapatnam.html"
+            },
+            {
+                category: "beaches",
+                name: "Baruva Beach",
+                description: "A beautiful and tranquil beach famous for its calm waters,scenic sourroundingd,historic lighthouse.",
+                img: "https://travelsetu.com/apps/uploads/new_destinations_photos/destination/2024/01/01/fb829dea17d31faf0d43ddcc2e49f541_1000x1000.jpg",
+                imgAlt: "Historic hill fort with stone walls and strategic location",
+                moreInfo: "/home/pravalika/Desktop/Hello Andhra/baruva.html"
+            },
+             
+             
+               
+            // Waterfalls
+            
+            {
+                category: "waterfalls",
+                name: " IDTA Mettaguda waterfalls",
+                description: "A capivating waterfalls nestled amidst lush greenery,offering a refreshing and scenic natural retreat.",
+                img: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgHJUeARAbePA933ZQSN6hZ62GkXjRl1wt3tPxJgNxu8vofokVjdDRRj4-SVC_GQ0JJd_WDlWq9fnwbtOYz9oDpCPkfCdMvq80oHb9_cvflaHgXlOyqLosRf6MDTKob4jcXHrh4DzmMsHI/w1200-h630-p-k-no-nu/sunnapu+gadda+water+falls+srikakulam.jpg",
+                imgAlt: "Historic hill fort with stone walls and strategic location",
+                moreInfo: "/home/pravalika/Desktop/Hello Andhra/itda.html"
+            },
+              {
+                category: "waterfalls",
+                name: "Sunnapugeda waterfalls",
+                description: "A Stunning waterfall sourrounded by dense forests,providing a serene and picturesque escape into nature.",
+                img: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgHJUeARAbePA933ZQSN6hZ62GkXjRl1wt3tPxJgNxu8vofokVjdDRRj4-SVC_GQ0JJd_WDlWq9fnwbtOYz9oDpCPkfCdMvq80oHb9_cvflaHgXlOyqLosRf6MDTKob4jcXHrh4DzmMsHI/w1200-h630-p-k-no-nu/sunnapu+gadda+water+falls+srikakulam.jpg",
+                imgAlt: "Historic hill fort with stone walls and strategic location",
+                moreInfo: "/home/pravalika/Desktop/Hello Andhra/sunnapugeda.html"
+            },
+              
+          ];
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        const searchInput = document.getElementById('search-input');
+        const destinationsGrid = document.getElementById('destinations-grid');
+        let selectedCategories = new Set(['all']);
+        let searchTerm = '';
+
+        function updateDestinations() {
+            destinationsGrid.innerHTML = '';
+            
+            const filtered = destinations.filter(dest => {
+                const categoryMatch = selectedCategories.has('all') || selectedCategories.has(dest.category);
+                const searchMatch = searchTerm === '' || 
+                                  dest.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                                  dest.description.toLowerCase().includes(searchTerm.toLowerCase());
+                return categoryMatch && searchMatch;
+            });
+            
+            if (filtered.length === 0) {
+                destinationsGrid.innerHTML = '<p class="text-center col-span-full text-gray-500 py-8">No destinations found matching your criteria.</p>';
+                return;
+            }
+            
+            filtered.forEach(dest => {
+                const card = document.createElement('div');
+                card.className = 'card bg-white rounded-lg shadow-md overflow-hidden';
+                card.innerHTML = `
+                    <div class="card-image">
+                        <img src="${dest.img}" alt="${dest.imgAlt}" class="w-full h-48 object-cover" loading="lazy" />
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold mb-2 capitalize">${dest.name}</h3>
+                        <p class="text-gray-600 mb-2">${dest.description}</p>
+                        <a href="${dest.moreInfo}" target="_blank" rel="noopener noreferrer" class="more-info">More Info</a>
+                        <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full capitalize ml-2">${dest.category}</span>
+                    </div>
+                `;
+                destinationsGrid.appendChild(card);
+            });
+        }
+
+        // Category button event listeners
+        categoryButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const category = btn.dataset.category;
+                
+                if (category === 'all') {
+                    selectedCategories.clear();
+                    selectedCategories.add('all');
+                    categoryButtons.forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                } else {
+                    selectedCategories.delete('all');
+                    if (selectedCategories.has(category)) {
+                        selectedCategories.delete(category);
+                        btn.classList.remove('selected');
+                        
+                        // If no categories selected, show all
+                        if (selectedCategories.size === 0) {
+                            selectedCategories.add('all');
+                            document.querySelector('[data-category="all"]').classList.add('selected');
+                        }
+                    } else {
+                        selectedCategories.add(category);
+                        btn.classList.add('selected');
+                    }
+                }
+                
+                updateDestinations();
+            });
+        });
+
+        // Search functionality
+        searchInput.addEventListener('input', (e) => {
+            searchTerm = e.target.value;
+            updateDestinations();
+        });
+
+        // Initialize with all destinations
+        document.querySelector('[data-category="all"]').classList.add('selected');
+        updateDestinations();
+    </script>
+</body>
+</html>
