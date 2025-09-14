@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Destination Selector</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(to right, #f3f4f6, #e5e7eb);
+            font-family: 'Inter', sans-serif;
+        }
+        .card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .category-btn {
+            transition: all 0.3s;
+        }
+        .category-btn.selected {
+            background-color: #3b82f6;
+            color: white;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="bg-gradient-to-r from-blue-500 to-purple-600 text-white py-8">
+        <div class="container mx-auto text-center">
+            <h1 class="text-4xl font-bold mb-2">Explore Travel Destinations</h1>
+            <p class="text-lg">Select categories to discover amazing temples, tourist spots, beaches,caves,forts and waterfalls</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <section class="category-selector mb-8">
+            <h2 class="text-2xl font-semibold mb-4">Choose Your Interests</h2>
+            <div class="flex flex-wrap gap-4 justify-center">
+                <button class="category-btn bg-white shadow-md px-6 py-3 rounded-lg text-gray-700 font-medium" data-category="temples">Temples</button>
+                <button class="category-btn bg-white shadow-md px-6 py-3 rounded-lg text-gray-700 font-medium" data-category="tourist-places">Tourist Places</button>
+                <button class="category-btn bg-white shadow-md px-6 py-3 rounded-lg text-gray-700 font-medium" data-category="forts">forts</button>
+                <button class="category-btn bg-white shadow-md px-6 py-3 rounded-lg text-gray-700 font-medium" data-category="waterfalls">Waterfalls</button>
+            </div>
+        </section>
+
+        <section class="destinations">
+            <div id="destinations-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </section>
+    </main>
+
+    <script>
+        const destinations = [
+            {
+                category: "temples",
+                name: "sri venkateswara swamy temple",
+                description: "A magnificent temple complex in Cambodia, symbol of ancient Khmer civilization.",
+                 img: "/home/pravalika/Downloads/d6a40b2bd26bf13131645f0c51e672da.jpg",
+                  imgAlt: "Mystical Buddhist stupa with detailed stone reliefs depicting Buddha's life story on a hillside with volcanic mountain backdrop"
+            },
+            {
+                category: "temples",
+                name: "varasidhi vinayakaswamy temple",
+                description: "A Buddhist temple in Indonesia, known for its stunning architecture and history.",
+                img:"/home/pravalika/Downloads/c9ff31a32403dd7af65c9f8f68403d5c.jpg"
+                imgAlt: "Mystical Buddhist stupa with detailed stone reliefs depicting Buddha's life story on a hillside with volcanic mountain backdrop"
+            },
+            {
+                category: "temples",
+                name: "srikalahasthi temple",
+                description: "Iconic iron lattice tower in Paris, offering panoramic views of the city.",
+                imgAlt: "Tall wrought-iron structure illuminated at night overlooking a river with city lights reflecting on the water"
+            },
+            {
+                category: "temples",
+                name: "ardhagiri anjaneyaswamy temple",
+                description: "Ancient wall stretching across northern China, a symbol of human perseverance.",
+                imgAlt: "Lengthy stone wall winding through mountainous terrain with towers and watchtowers under a clear blue sky"
+            },
+
+            {
+                category: "temples",
+                name: "sri koneti raya temple",
+                description: "Rugged and beautiful coastline with crashing waves and scenic views.",
+                imgAlt: "Dramatic coastal cliffs with crashing ocean waves, redwoods on hills, and a winding road along the Pacific shore"
+            },
+        
+        
+             {
+                category: "temples",
+                name: "sai baba temple",
+                description: "Rugged and beautiful coastline with crashing waves and scenic views.",
+                imgAlt: "Dramatic coastal cliffs with crashing ocean waves, redwoods on hills, and a winding road along the Pacific shore"
+            },
+             {
+                category: "temples",
+                name: "sri kamakshi ambika sametha temple",
+                description: "Rugged and beautiful coastline with crashing waves and scenic views.",
+                imgAlt: "Dramatic coastal cliffs with crashing ocean waves, redwoods on hills, and a winding road along the Pacific shore"
+            },
+             {
+                category: "temples",
+                name: "sri vedha narayana swamy temple",
+                description: "Rugged and beautiful coastline with crashing waves and scenic views.",
+                imgAlt: "Dramatic coastal cliffs with crashing ocean waves, redwoods on hills, and a winding road along the Pacific shore"
+            },
+             {
+                category: "temples",
+                name: "sri pallikondaswara swamy temple",
+                description: "Rugged and beautiful coastline with crashing waves and scenic views.",
+                imgAlt: "Dramatic coastal cliffs with crashing ocean waves, redwoods on hills, and a winding road along the Pacific shore"
+            },
+             {
+                category: "temples",
+                name: "sri anjineya swamy temple",
+                description: "Rugged and beautiful coastline with crashing waves and scenic views.",
+                imgAlt: "Dramatic coastal cliffs with crashing ocean waves, redwoods on hills, and a winding road along the Pacific shore"
+            },
+             {
+                category: "temples",
+                name: "moogileswara temple",
+                description: "Rugged and beautiful coastline with crashing waves and scenic views.",
+                imgAlt: "Dramatic coastal cliffs with crashing ocean waves, redwoods on hills, and a winding road along the Pacific shore"
+            },
+             {
+                category: "temples",
+                name: "sri kapileswara swamy temple",
+                description: "Rugged and beautiful coastline with crashing waves and scenic views.",
+                imgAlt: "Dramatic coastal cliffs with crashing ocean waves, redwoods on hills, and a winding road along the Pacific shore"
+            },
+             {
+                category: "temples",
+                name: "kapil theertham",
+                description: "Rugged and beautiful coastline with crashing waves and scenic views.",
+                imgAlt: "Dramatic coastal cliffs with crashing ocean waves, redwoods on hills, and a winding road along the Pacific shore"
+            },
+             {
+                category: "temples",
+                name: "sri mallayakonda temple",
+                description: "Rugged and beautiful coastline with crashing waves and scenic views.",
+                imgAlt: "Dramatic coastal cliffs with crashing ocean waves, redwoods on hills, and a winding road along the Pacific shore"
+            },
+             {
+                category: "temples",
+                name: "kattamanchi sri kulandhswara temple",
+                description: "Rugged and beautiful coastline with crashing waves and scenic views.",
+                imgAlt: "Dramatic coastal cliffs with crashing ocean waves, redwoods on hills, and a winding road along the Pacific shore"
+            },
+             {
+                category: "temples",
+                name: "vezzupalli shiva temple",
+                description: "Rugged and beautiful coastline with crashing waves and scenic views.",
+                imgAlt: "Dramatic coastal cliffs with crashing ocean waves, redwoods on hills, and a winding road along the Pacific shore"
+            },
+             {
+                category: "temples",
+                name: "sri munishwara swamy temple",
+                description: "Rugged and beautiful coastline with crashing waves and scenic views.",
+                imgAlt: "Dramatic coastal cliffs with crashing ocean waves, redwoods on hills, and a winding road along the Pacific shore"
+            },
+             {
+                category: "temples",
+                name: "ponniamma temple",
+                description: "Rugged and beautiful coastline with crashing waves and scenic views.",
+                imgAlt: "Dramatic coastal cliffs with crashing ocean waves, redwoods on hills, and a winding road along the Pacific shore"
+            },
+             {
+                category: "temples",
+                name: "sri valli devasena subramanya swamy temple",
+                description: "Rugged and beautiful coastline with crashing waves and scenic views.",
+                imgAlt: "Dramatic coastal cliffs with crashing ocean waves, redwoods on hills, and a winding road along the Pacific shore"
+            },
+             {
+                category: "temples",
+                name: "sri siddeswra swamy temple",
+                description: "Rugged and beautiful coastline with crashing waves and scenic views.",
+                imgAlt: "Dramatic coastal cliffs with crashing ocean waves, redwoods on hills, and a winding road along the Pacific shore"
+            },
+             {
+                category: "temples",
+                name: "sri lakshmi narsimha swamy temple",
+                description: "Rugged and beautiful coastline with crashing waves and scenic views.",
+                imgAlt: "Dramatic coastal cliffs with crashing ocean waves, redwoods on hills, and a winding road along the Pacific shore"
+            },
+             {
+                category: "temples",
+                name: "sri krishna temple",
+                description: "Rugged and beautiful coastline with crashing waves and scenic views.",
+                imgAlt: "Dramatic coastal cliffs with crashing ocean waves, redwoods on hills, and a winding road along the Pacific shore"
+            },
+             {
+                category: "temples",
+                name: "sri kubera  umamaheswara swamy temple",
+                description: "Rugged and beautiful coastline with crashing waves and scenic views.",
+                imgAlt: "Dramatic coastal cliffs with crashing ocean waves, redwoods on hills, and a winding road along the Pacific shore"
+            },
+             {
+                category: "temples",
+                name: "sri vitupakshi amman temple",
+                description: "One of the largest waterfall systems in the world, located in Argentina and Brazil.",
+                imgAlt: "Spectacular series of waterfalls cascading into a misty gorge with lush rainforest vegetation and colorful rainbows in the spray"
+            },
+             {
+                category: "tourist-places",
+                name: "horsely hills",
+                description: "Rugged and beautiful coastline with crashing waves and scenic views.",
+                imgAlt: "Dramatic coastal cliffs with crashing ocean waves, redwoods on hills, and a winding road along the Pacific shore"
+            },
+             {
+                category: "tourist-places",
+                name: "nagalapuram hills",
+                description: "Rugged and beautiful coastline with crashing waves and scenic views.",
+                imgAlt: "Dramatic coastal cliffs with crashing ocean waves, redwoods on hills, and a winding road along the Pacific shore"
+            },
+
+             {
+                category: "forts",
+                name: "chandragiri fort",
+                description: "One of the largest waterfall systems in the world, located in Argentina and Brazil.",
+                imgAlt: "Spectacular series of waterfalls cascading into a misty gorge with lush rainforest vegetation and colorful rainbows in the spray"
+            },
+             {
+                category: "forts",
+                name: "gurramkonda fort",
+                description: "One of the largest waterfall systems in the world, located in Argentina and Brazil.",
+                imgAlt: "Spectacular series of waterfalls cascading into a misty gorge with lush rainforest vegetation and colorful rainbows in the spray"
+            },
+             {
+                category: "forts",
+                name: "kollabylu fort",
+                description: "One of the largest waterfall systems in the world, located in Argentina and Brazil.",
+                imgAlt: "Spectacular series of waterfalls cascading into a misty gorge with lush rainforest vegetation and colorful rainbows in the spray"
+            },
+              {
+                category: "forts",
+                name: "kongundhi fort",
+                description: "One of the largest waterfall systems in the world, located in Argentina and Brazil.",
+                imgAlt: "Spectacular series of waterfalls cascading into a misty gorge with lush rainforest vegetation and colorful rainbows in the spray"
+            },
+             {
+                category: "forts",
+                name: "kaundinya fort",
+                description: "One of the largest waterfall systems in the world, located in Argentina and Brazil.",
+                imgAlt: "Spectacular series of waterfalls cascading into a misty gorge with lush rainforest vegetation and colorful rainbows in the spray"
+            },
+             {
+                category: "forts",
+                name: "madanapalle fort",
+                description: "One of the largest waterfall systems in the world, located in Argentina and Brazil.",
+                imgAlt: "Spectacular series of waterfalls cascading into a misty gorge with lush rainforest vegetation and colorful rainbows in the spray"
+            },
+             {
+                category: "waterfalls",
+                name: "kalyani revu waterfalls",
+                description: "One of the largest waterfall systems in the world, located in Argentina and Brazil.",
+                imgAlt: "Spectacular series of waterfalls cascading into a misty gorge with lush rainforest vegetation and colorful rainbows in the spray"
+            },
+            
+             {
+                category: "waterfalls",
+                name: "aare awaterfalls",
+                description: "One of the largest waterfall systems in the world, located in Argentina and Brazil.",
+                imgAlt: "Spectacular series of waterfalls cascading into a misty gorge with lush rainforest vegetation and colorful rainbows in the spray"
+            },
+             {
+                category: "waterfalls",
+                name: "kaigal waterfalls",
+                description: "One of the largest waterfall systems in the world, located in Argentina and Brazil.",
+                imgAlt: "Spectacular series of waterfalls cascading into a misty gorge with lush rainforest vegetation and colorful rainbows in the spray"
+            },
+             {
+                category: "waterfalls",
+                name: "nagalapuram waterfalls",
+                description: "One of the largest waterfall systems in the world, located in Argentina and Brazil.",
+                imgAlt: "Spectacular series of waterfalls cascading into a misty gorge with lush rainforest vegetation and colorful rainbows in the spray"
+            },
+             {
+                category: "waterfalls",
+                name: "kailasakona waterfalls",
+                description: "One of the largest waterfall systems in the world, located in Argentina and Brazil.",
+                imgAlt: "Spectacular series of waterfalls cascading into a misty gorge with lush rainforest vegetation and colorful rainbows in the spray"
+            },
+             {
+                category: "waterfalls",
+                name: "talakona waterfalls",
+                description: "One of the largest waterfall systems in the world, located in Argentina and Brazil.",
+                imgAlt: "Spectacular series of waterfalls cascading into a misty gorge with lush rainforest vegetation and colorful rainbows in the spray"
+            },
+             {
+                category: "waterfalls",
+                name: "jilledubugga",
+                description: "One of the largest waterfall systems in the world, located in Argentina and Brazil.",
+                imgAlt: "Spectacular series of waterfalls cascading into a misty gorge with lush rainforest vegetation and colorful rainbows in the spray"
+            }
+             
+        ];
+
+        card.innerHTML = `
+  <div class="card-image">
+    <img src="${dest.img}" alt="${dest.imgAlt}" class="w-full h-48 object-cover" loading="lazy" />
+  </div>
+  <div class="p-4">
+    <h3 class="text-xl font-semibold mb-2 capitalize">${dest.name}</h3>
+    <p class="text-gray-600">${dest.description}</p>
+  </div>
+`;
+
+
+  
+
+        categoryButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const category = btn.dataset.category;
+                if (selectedCategories.has(category)) {
+                    selectedCategories.delete(category);
+                    btn.classList.remove('selected');
+                } else {
+                    selectedCategories.add(category);
+                    btn.classList.add('selected');
+                }
+                updateDestinations();
+            });
+        });
+
+        // Load all destinations initially
+        updateDestinations();
+    </script>
+</body>
+</html>
+</content>
+</create_file>

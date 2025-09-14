@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExploreWonders - Travel & Tourism Hackathon Project</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .hero-background {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .destination-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .destination-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .parallax-section {
+            background-attachment: fixed;
+            background-size: cover;
+            position: relative;
+        }
+        .parallax-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 1;
+        }
+        .parallax-section > div {
+            position: relative;
+            z-index: 2;
+        }
+        /* Fallback for images */
+        img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+        img[onerror] {
+            position: relative;
+        }
+        img[onerror].fallback {
+            background: #f0f0f0;
+            border: 1px solid #ddd;
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <header class="bg-white shadow-lg fixed top-0 w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <nav class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-4">
+                    <h1 class="text-2xl font-bold text-blue-600">Hello Andhra!</h1>
+                    <span class="text-sm text-gray-500">Your Gateway to Andhra exploration...</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="text-gray-700 hover:text-blue-600 transition">Home</a>
+                    <a href="#contact" class="text-gray-700 hover:text-blue-600 transition">Contact</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="menu-toggle" class="text-gray-700 focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                </div>
+            </nav>
+            <div id="mobile-menu" class="md:hidden hidden space-y-4 py-4 bg-gray-100">
+                <a href="#home" class="block text-gray-700">Home</a>
+                <a href="#contact" class="block text-gray-700">Contact</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-background text-white pt-20 pb-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-5xl font-bold mb-6">Discover the Andhra with ExploreWonders</h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto">Embark on unforgettable journeys to the most breathtaking destinations. From serene beaches to towering mountains, we bring the world's wonders to your fingertips.</p>
+            <a href="#destinations" class="bg-yellow-500 text-black px-8 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition">Explore Destinations</a>
+        </div>
+    </section>
+
+ 
+    <section id="destinations" class="py-16 bg-white">
+        <section id="attractions" class="parallax-section py-20 bg-fixed" style="background-image: url('/home/pravalika/Downloads/WhatsApp Image 2025-09-13 at 17.36.41.jpeg'); background-position: center;">
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center mb-12">Popular Destinations</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="destination-card bg-gray-100 rounded-lg overflow-hidden shadow-lg">
+                    <img src=https://travelsetu.com/apps/uploads/new_destinations_photos/destination/2024/01/01/580e3a24a86d898335c09355aa0dbe41_1000x1000.jpg alt="Vivid turquoise waters lapping against white sandy shores of a tropical paradise island with palm trees swaying in the breeze, vibrant blue skies and distant coral reefs" onerror="this.classList.add('fallback'); this.innerHTML='Image placeholder: Tropical island paradise'">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">srikakulam</h3>
+                        <p class="text-gray-600 mb-4">Srikakulam is a coastal town in Andhra Pradesh, known for its ancient temples and scenic beaches. It has a rich history and is located near the Bay of Bengal, making it both culturally and naturally beautiful..</p>
+                        <a href="/home/pravalika/Desktop/Hello Andhra/Project hackthon.html" class="text-blue-600 font-medium">Learn More</a>
+                    </div>
+                </div>
+                <div class="destination-card bg-gray-100 rounded-lg overflow-hidden shadow-lg">
+                    <img src=https://etvbharatimages.akamaized.net/etvbharat/prod-images/14-04-2024/1200-675-21223269-550-21223269-1713098826143.jpg alt="Majestic snow-capped peaks of the Swiss Alps under a clear blue sky, green valleys dotted with charming alpine villages, pristine lakes reflecting mountain vistas" onerror="this.classList.add('fallback'); this.innerHTML='Image placeholder: Snow-capped Swiss Alps'">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">vizayanagaram</h3>
+                        <p class="text-gray-600 mb-4">Vizianagaram is a historic town in Andhra Pradesh, known for its royal heritage and cultural significance. It was once a princely state and is famous for its forts, palaces, and classical music tradition.
+.</p>
+                        <a href="/home/pravalika/Desktop/Hello Andhra/project hackethon2.html" class="text-blue-600 font-medium">Learn More</a>
+                    </div>
+                </div>
+                <div class="destination-card bg-gray-100 rounded-lg overflow-hidden shadow-lg">
+                    <img src=https://vizagtourism.org.in/images/places-to-visit/header/ins-kurusura-submarine-museum-vizag-tourism-entry-fee-timings-holidays-reviews-header.jpg alt="Ancient stone pyramids silhouetted against a golden sunset, vast desert sands with camels walking, bustling marketplace with colorful tents and exotic spices" onerror="this.classList.add('fallback'); this.innerHTML='Image placeholder: Egyptian pyramids sunset'">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">visakhapatnam</h3>
+                        <p class="text-gray-600 mb-4">Visakhapatnam, also known as Vizag, is a major coastal city in Andhra Pradesh. It is known for its beautiful beaches, industrial growth, and naval base. Vizag blends natural beauty with urban development, making it a key tourist and economic hub..</p>
+                        <a href="/home/pravalika/Desktop/vizag.html" class="text-blue-600 font-medium">Learn More</a>
+                    </div>
+                </div>
+</div>
+</div>
+</section>
+</section>
+
+<section id="destinations" class="py-16 bg-white">
+    <section id="attractions" class="parallax-section py-20 bg-fixed" style="background-image: url('/home/pravalika/Downloads/WhatsApp Image 2025-09-13 at 17.36.41.jpeg'); background-position: center;">
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="destination-card bg-gray-100 rounded-lg overflow-hidden shadow-lg">
+                    <img src= https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0b/6a/2d/f4/img-20160502-084151-largejpg.jpg?w=1200&h=700&s=1 alt="Vivid turquoise waters lapping against white sandy shores of a tropical paradise island with palm trees swaying in the breeze, vibrant blue skies and distant coral reefs" onerror="this.classList.add('fallback'); this.innerHTML='Image placeholder: Tropical island paradise'">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">krishna</h3>
+                        <p class="text-gray-600 mb-4">Krishna is a district in Andhra Pradesh, known for its fertile lands, thanks to the Krishna River. It has a rich cultural and historical background, with Vijayawada as its major city. The region is famous for agriculture, temples, and classical arts.
+</p>
+                        <a href="/home/pravalika/Desktop/layout.html" class="text-blue-600 font-medium">Learn More</a>
+                    </div>
+                </div>
+                <div class="destination-card bg-gray-100 rounded-lg overflow-hidden shadow-lg">
+                    <img src=https://tripxl.com/blog/wp-content/uploads/2024/09/Rajahmundry-6.jpg alt="Majestic snow-capped peaks of the Swiss Alps under a clear blue sky, green valleys dotted with charming alpine villages, pristine lakes reflecting mountain vistas" onerror="this.classList.add('fallback'); this.innerHTML='Image placeholder: Snow-capped Swiss Alps'">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">east godvari</h3>
+                        <p class="text-gray-600 mb-4">East Godavari is a lush and fertile district in Andhra Pradesh, known for its rich agriculture, scenic landscapes, and the Godavari River. It is famous for paddy fields, coconut groves, and cultural heritage, with towns like Rajahmundry and Kakinada playing key roles in its economy and tradition.</p>
+                        <a href="/home/pravalika/Desktop/project1.html" class="text-blue-600 font-medium">Learn More</a>
+                    </div>
+                </div>
+                <div class="destination-card bg-gray-100 rounded-lg overflow-hidden shadow-lg">
+                    <img src=https://alchetron.com/cdn/west-godavari-district-14e9aa34-2f6f-42ed-8f88-f32327ee455-resize-750.jpg alt="Ancient stone pyramids silhouetted against a golden sunset, vast desert sands with camels walking, bustling marketplace with colorful tents and exotic spices" onerror="this.classList.add('fallback'); this.innerHTML='Image placeholder: Egyptian pyramids sunset'">
+            
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">west godavari</h3>
+                        <p class="text-gray-600 mb-4">West Godavari is a fertile and culturally rich district in Andhra Pradesh, known for its agriculture, especially paddy and sugarcane. The Godavari River supports its greenery, and towns like Eluru are key centers. The district is also known for traditional arts, temples, and scenic beauty.
+
+.</p>
+                        <a href="/home/pravalika/Desktop/godavari.html" class="text-blue-600 font-medium">Learn More</a>
+                    </div>
+                </div>
+</div>
+</div>
+</section>
+</section>
+<section id="destinations" class="py-16 bg-white">
+    <section id="attractions" class="parallax-section py-20 bg-fixed" style="background-image: url('/home/pravalika/Downloads/WhatsApp Image 2025-09-13 at 17.36.41.jpeg'); background-position: center;">
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="destination-card bg-gray-100 rounded-lg overflow-hidden shadow-lg">
+                    <img src=https://wirally.com/wp-content/uploads/2020/01/1-Guntur.jpg alt="Vivid turquoise waters lapping against white sandy shores of a tropical paradise island with palm trees swaying in the breeze, vibrant blue skies and distant coral reefs" onerror="this.classList.add('fallback'); this.innerHTML='Image placeholder: Tropical island paradise'">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">guntur</h3>
+                        <p class="text-gray-600 mb-4">Guntur is a major district in Andhra Pradesh, known for its agriculture, especially chili production. It has a strong historical and cultural background, with the city of Guntur serving as a key educational and commercial hub. The region also plays an important role in politics and trade.</p>
+                        <a href="/home/pravalika/Desktop/Guntur/Guntur.html" class="text-blue-600 font-medium">Learn More</a>
+                    </div>
+                </div>
+                <div class="destination-card bg-gray-100 rounded-lg overflow-hidden shadow-lg">
+                    <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/08/16/5b/8e/the-abandoned-stupas.jpg?w=600&h=400&s=1"alt="Majestic snow-capped peaks of the Swiss Alps under a clear blue sky, green valleys dotted with charming alpine villages, pristine lakes reflecting mountain vistas" onerror="this.classList.add('fallback'); this.innerHTML='Image placeholder: Snow-capped Swiss Alps'">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">prakasam</h3>
+                        <p class="text-gray-600 mb-4">.Prakasam is a district in Andhra Pradesh known for its rich mineral resources, especially granite and limestone. It has a mix of agriculture and industry, with Ongole as its main city, famous for the Ongole breed of cattle. The district also has a long coastline and cultural heritage.
+</p>
+                        <a href="/home/pravalika/Desktop/project2.html" class="text-blue-600 font-medium">Learn More</a>
+                    </div>
+                </div>
+                <div class="destination-card bg-gray-100 rounded-lg overflow-hidden shadow-lg">
+                    <img src="https://d3sftlgbtusmnv.cloudfront.net/blog/wp-content/uploads/2025/02/Nellore-City-Guide-Cover-Photo-1.jpg" alt="Ancient stone pyramids silhouetted against a golden sunset, vast desert sands with camels walking, bustling marketplace with colorful tents and exotic spices" onerror="this.classList.add('fallback'); this.innerHTML='Image placeholder: Egyptian pyramids sunset'">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">nellore</h3>
+                        <p class="text-gray-600 mb-4">Nellore is a coastal district in Andhra Pradesh, known for agriculture, aquaculture, and rich cultural heritage. It is famous for paddy fields, shrimp farming, and temples. Nellore city is the district headquarters and plays a key role in trade and education.
+.</p>
+                        <a href="/home/pravalika/Documents/2_0.html" class="text-blue-600 font-medium">Learn More</a>
+                    </div>
+                </div>
+</div>
+</div>
+</section>
+</section>
+
+<section id="destinations" class="py-16 bg-white">
+    <section id="attractions" class="parallax-section py-20 bg-fixed" style="background-image: url('/home/pravalika/Downloads/WhatsApp Image 2025-09-13 at 17.36.41.jpeg'); background-position: center;">
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="destination-card bg-gray-100 rounded-lg overflow-hidden shadow-lg">
+                    <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/06/af/f6/31/kondareddy-burz-fort.jpg?w=900&h=-1&s=1" alt="Vivid turquoise waters lapping against white sandy shores of a tropical paradise island with palm trees swaying in the breeze, vibrant blue skies and distant coral reefs" onerror="this.classList.add('fallback'); this.innerHTML='Image placeholder: Tropical island paradise'">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">kurnool</h3>
+                        <p class="text-gray-600 mb-4">Kurnool is a historic city and district in Andhra Pradesh, known as the “Gateway to Rayalaseema.” It has a rich cultural heritage, famous for ancient forts like Kurnool Fort and religious sites. The region is also important for agriculture and has a growing industrial base.
+</p>
+                        <a href="/home/pravalika/Desktop/kadapa/project-3.html" class="text-blue-600 font-medium">Learn More</a>
+                    </div>
+                </div>
+                <div class="destination-card bg-gray-100 rounded-lg overflow-hidden shadow-lg">
+                    <img src=https://www.connectingtraveller.com/images/city/1646849956.png alt="Majestic snow-capped peaks of the Swiss Alps under a clear blue sky, green valleys dotted with charming alpine villages, pristine lakes reflecting mountain vistas" onerror="this.classList.add('fallback'); this.innerHTML='Image placeholder: Snow-capped Swiss Alps'">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">chittoor</h3>
+                        <p class="text-gray-600 mb-4">Chittoor is a district in Andhra Pradesh known for its rich cultural heritage and agricultural produce, especially mangoes and sugarcane. It is home to the famous Tirupati temple, one of the most visited pilgrimage sites in India. The district combines natural beauty with spiritual significance.
+.</p>
+                        <a href="/home/pravalika/Documents/1_0.html" class="text-blue-600 font-medium">Learn More</a>
+                    </div>
+                </div>
+                <div class="destination-card bg-gray-100 rounded-lg overflow-hidden shadow-lg">
+                    <img src=https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/4a/20/f2/grand-canyon-of-india.jpg?w=500&h=500&s=1 alt="Ancient stone pyramids silhouetted against a golden sunset, vast desert sands with camels walking, bustling marketplace with colorful tents and exotic spices" onerror="this.classList.add('fallback'); this.innerHTML='Image placeholder: Egyptian pyramids sunset'">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">kadapa</h3>
+                        <p class="text-gray-600 mb-4">Kadapa, also known as YSR district, is located in Andhra Pradesh and is known for its mineral wealth, especially limestone and barytes. It has a rich history, beautiful temples, and is an important agricultural and industrial center in the region.
+.</p>
+                        <a href="/home/pravalika/Desktop/kadapa/kadapa.html" class="text-blue-600 font-medium">Learn More</a>
+                    </div>
+                </div>
+</div>
+</div>
+</section>
+</section>
+
+<section id="destinations" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <section id="attractions" class="parallax-section py-20 bg-fixed" style="background-image: url('/home/pravalika/Downloads/WhatsApp Image 2025-09-13 at 17.36.41.jpeg'); background-position: center;">
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="destination-card bg-gray-100 rounded-lg overflow-hidden shadow-lg">
+                    <img src="https://cdn.britannica.com/80/142680-050-DF73D2F2/International-Society-for-Krishna-Consciousness-Temple-Anantapur.jpg" alt="Vivid turquoise waters lapping against white sandy shores of a tropical paradise island with palm trees swaying in the breeze, vibrant blue skies and distant coral reefs" onerror="this.classList.add('fallback'); this.innerHTML='Image placeholder: Tropical island paradise'">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">anantapuram</h3>
+                        <p class="text-gray-600 mb-4">Anantapuram (Anantapur) is a district in Andhra Pradesh known for its dry climate and historic significance. It is famous for the Lepakshi temple and its silk industry. Despite being arid, the region has a rich cultural heritage and is an important center for agriculture and education.
+</p>
+                        <a href="/home/pravalika/Desktop/layout 2.html" class="text-blue-600 font-medium">Learn More</a>
+                    </div>
+                </div>
+</div>
+</div>
+
+
+</section>
+</div>
+</section>
+
+   
+
+  
+    <section id="testimonials" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+             <section id="attractions" class="parallax-section py-20 bg-fixed" style="background-image: url('/home/pravalika/Downloads/WhatsApp Image 2025-09-13 at 17.36.41.jpeg'); background-position: center;">
+            <h2 class="text-4xl font-bold text-center mb-12">team techno</h2>
+            </div>
+
+    </section>
+</div>
+</section>
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 bg-blue-600 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-bold mb-8">Get in Touch</h2>
+            <p class="text-xl mb-8">Ready to plan your next trip? Contact us for personalized assistance.</p>
+            <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-8">
+                <p>Email: info@helloAndhra.com</p>
+                <p>Phone: +91 8639674615</p>
+                <p>Location: Andhra Pradesh Adventures HQ</p>
+            </div>
+            <div class="mt-8">
+                <p class="text-sm">© 2025 Exploreandhra. All rights reserved.</p>
+            </div>
+        </div>
+    </section>
+
+
+    <script>
+        
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        document.querySelectorAll('img').forEach(img => {
+            img.addEventListener('error', function() {
+                this.onerror = null; // Prevent infinite loop
+                this.classList.add('fallback');
+                this.innerHTML = 'Image not available';
+            });
+        });
+    </script>
+</body>
+</html>
+</content>
+</create_file>
+
+<attempt_completion>

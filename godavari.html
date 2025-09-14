@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Travel Destination Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(to right, #f3f4f6, #e5e7eb);
+            font-family: 'Inter', sans-serif;
+        }
+        .card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .category-btn {
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .category-btn.selected {
+            background-color: #3b82f6;
+            color: white;
+        }
+        .search-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+        }
+        a.more-info {
+            color: #2563eb;
+            font-weight: 600;
+            text-decoration: underline;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+        a.more-info:hover {
+            color: #1d4ed8;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="bg-gradient-to-r from-blue-500 to-purple-600 text-white py-8">
+        <div class="container mx-auto text-center px-4">
+            <h1 class="text-4xl font-bold mb-2">Explore Travel Destinations</h1>
+            <p class="text-lg max-w-3xl mx-auto">
+                Discover amazing temples, tourist spots, beaches, caves, forts, and waterfalls
+            </p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <section class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+            <div>
+                <h2 class="text-2xl font-semibold mb-4">Choose Your Interests</h2>
+                <div class="flex flex-wrap gap-2">
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="all">All</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="temples">Temples</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="Beaches">Beaches</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="tourist-places">tourist-places</button>
+                    
+                </div>
+            </div>
+            <div class="w-full md:w-64">
+                <input type="text" id="search-input" placeholder="Search destinations..." class="search-input w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-500" />
+            </div>
+        </section>
+
+        <section class="destinations">
+            <div id="destinations-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-6 mt-12">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2025 Travel Destination Explorer. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const destinations = [
+            // Temples
+            {
+                category: "temples",
+                name: "Shri dwaraka tirumala ",
+                description: "Dwaraka Tirumala Temple, also known as Chinna Tirupati, is a famous Hindu temple located atop Seshachala Hill in Eluru district, Andhra Pradesh. It is dedicated to Lord Venkateswara, an incarnation of Lord Vishnu, and attracts around 50 lakh devotees annually.  ",
+                img: " https://d2u1z1lopyfwlx.cloudfront.net/thumbnails/1f5bdf64-2afe-510c-8051-4d32b696504d/f2a29f24-519c-5c39-824a-007e381403c5.jpg",
+                moreInfo: "https://en.wikipedia.org/wiki/Sri_Venkateswara_Temple,_Tirumala"
+            },
+             {
+                category: "temples",
+                name: "Somarama temple",
+                description: "Somarama Temple, located in Bhimavaram of West Godavari district, Andhra Pradesh, is one of the five sacred Pancharama Kshetras dedicated to Lord Shiva. The temple is believed to have been built in the 3rd or 4th century and rebuilt by the Eastern Chalukya king Bhima in the 9th century.  ",
+                img: "https://d2u1z1lopyfwlx.cloudfront.net/thumbnails/07117388-0ce7-5007-96fd-168161515cdf/ff0f569a-6380-5394-9884-b50186182b4b.jpg ",
+                moreInfo: "https://en.wikipedia.org/wiki/Sri_Venkateswara_Temple,_Tirumala"
+            },
+            {
+                category: "temples",
+                name: "mavullamma ammavari  Temple",
+                description: "Mavullamma Ammavari Temple, located in Bhimavaram, Andhra Pradesh, is a revered temple dedicated to Goddess Mavullamma, believed to be an incarnation of Mahakali. ",
+                img: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/19/30/ef/ae/img-20190810-170436-largejpg.jpg?w=1200&h=-1&s=1",
+                imgAlt: "Colorful Hindu temple with detailed sculptures and decorative elements",
+                moreInfo: "https://en.wikipedia.org/wiki/Varasidhi_Vinayakaswamy_Temple"
+            },
+                        {
+                category: "temples",
+                name: "ksheera Ramalingeswara Swamy Temple",
+                description: "Ksheera Ramalingeswara Swamy Temple, located in Palakollu, West Godavari district of Andhra Pradesh, is one of the five sacred Pancharama Kshetras dedicated to Lord Shiva.",
+                img: "https://myoksha.com/wp-content/uploads/2017/01/Kshira-Ramalingeswara-Swamy-Temple10-Copy-e1505969577584.jpg",
+                imgAlt: "Colorful Hindu temple with detailed sculptures and decorative elements",
+                moreInfo: "https://en.wikipedia.org/wiki/Varasidhi_Vinayakaswamy_Temple"
+            },
+                                    {
+                category: "temples",
+                name: " Jagan mohini kesava swamy Temple -ryali",
+                description: "The Sri Jagan Mohini Kesava Swamy Temple in Ryali, Andhra Pradesh, is a unique and rare shrine dedicated to Lord Vishnu in his dual form as Kesava (front) and Mohini (rear) carved from a single black stone.",
+                img: "https://d2u1z1lopyfwlx.cloudfront.net/thumbnails/60ca01cb-a450-5e59-a573-d37c011903b1/aa3b79eb-a8ec-55b7-8d00-ba8874dfca13.jpg",
+                imgAlt: "Colorful Hindu temple with detailed sculptures and decorative elements",
+                moreInfo: "https://en.wikipedia.org/wiki/Varasidhi_Vinayakaswamy_Temple"
+            },
+                                    {
+                category: "temples",
+                name: " sri adikesava swamy Temple",
+                description: "Sri Adikesava Swamy Temple, also known as Sri Adikesava Embermanar Swamy Temple, is located in Narasapur (Narsapuram), West Godavari district, Andhra Pradesh",
+                img: "https://d2u1z1lopyfwlx.cloudfront.net/thumbnails/792ff081-d945-55c4-ba56-625b8ddd517a/2fdf7415-58ca-5674-a205-fcefffcee2a0.jpg",
+                imgAlt: "Colorful Hindu temple with detailed sculptures and decorative elements",
+                moreInfo: "https://en.wikipedia.org/wiki/Varasidhi_Vinayakaswamy_Temple"
+            },
+                                    {
+                category: "temples",
+                name: "sri achanta rameswara swamy Temple",
+                description: "Sri Achanta Rameswara Swamy Temple, located in Achanta, West Godavari district of Andhra Pradesh, is a historic Hindu temple dedicated to Lord Shiva, known here as Rameswara Swamy or Achanteswara.",
+                img: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiTFBavoRoKIQTqN54nqdiAe8TbJ7L3TszqQ0Q73Kc1k4l_qyA849mGNfsvcg2QA0jNMOeSSEqm0QU0HsLItQxU1zbInVdxKdcrOpwMd5Aoz3YLbz8j_8z-MsGSO746TduItHvK16QO-MsB/s640/achanta.jpg",
+                imgAlt: "Colorful Hindu temple with detailed sculptures and decorative elements",
+                moreInfo: "https://en.wikipedia.org/wiki/Varasidhi_Vinayakaswamy_Temple"
+            },
+                                    {
+                category: "temples",
+                name: " sri appanna swamy Temple -akiveedu",
+                description: "Sri Appana Swamy Temple is a famous temple located in Akiveedu, West Godavari district, Andhra Pradesh. Dedicated to Lord Shiva, the temple is known locally for its spiritual significance and traditional rituals. ",
+                img: "https://cdn-hfioh.nitrocdn.com/SfJHGSfzmkBkZAHAxXjrxFZEfxqmxCSy/assets/images/optimized/rev-8ad0689/dekhoapnadesh.co.in/wp-content/uploads/2022/12/banner-hd.jpg",
+                imgAlt: "Colorful Hindu temple with detailed sculptures and decorative elements",
+                moreInfo: "https://en.wikipedia.org/wiki/Varasidhi_Vinayakaswamy_Temple"
+            },
+                                    {
+                category: "temples",
+                name: " sri Vasavi Kanyaka ParameswariTemple",
+                description: "sri Vasavi Kanyaka Parameswari Temple is a renowned Hindu temple located in Penugonda, West Godavari district, Andhra Pradesh. The temple is dedicated to Goddess Vasavi Kanyaka Parameswari, revered as the Kuladevata (family deity) of the Komati and Vaishya communities.",
+                img: "https://d2u1z1lopyfwlx.cloudfront.net/thumbnails/7a418b6d-7513-577a-acf8-a45b9a04e52c/ef6568cd-8fff-558c-911b-b9990ee149c8.jpg",
+                imgAlt: "Colorful Hindu temple with detailed sculptures and decorative elements",
+                moreInfo: "https://en.wikipedia.org/wiki/Varasidhi_Vinayakaswamy_Temple"
+            },
+                                    {
+                category: "temples",
+                name: " sri mogaltur veerbhadra swamy Temple",
+                description: "Sri Veerabhadra Swamy Temple in Mogalturu, West Godavari district, Andhra Pradesh, is a revered Hindu temple dedicated to Lord Veerabhadra, an incarnation of Lord Shiva. ",
+                img: "https://d2u1z1lopyfwlx.cloudfront.net/thumbnails/b214b944-5da6-54ba-b8c2-4b85875c1e32/10f15eaa-bf9e-521e-a96a-3a51507685fd.jpg",
+                imgAlt: "Colorful Hindu temple with detailed sculptures and decorative elements",
+                moreInfo: "https://en.wikipedia.org/wiki/Varasidhi_Vinayakaswamy_Temple"
+            },
+                                    {
+                category: "temples",
+                name: "sri veerbhadra swamy Temple - peravali",
+                description: "Sri Veerabhadra Swamy Temple, located on Devakuta Parvatham amidst the Godavari River near Pattiseema in West Godavari, Andhra Pradesh, is dedicated to Lord Shiva in the form of Veerabhadra Swamy.",
+                img: "https://d2u1z1lopyfwlx.cloudfront.net/thumbnails/1ffb8679-d585-5d0d-b28d-a623665f4aae/6257f57e-c7ae-5b04-976a-b25dd14886af.jpg",
+                imgAlt: "Colorful Hindu temple with detailed sculptures and decorative elements",
+                moreInfo: "https://en.wikipedia.org/wiki/Varasidhi_Vinayakaswamy_Temple"
+            },
+                                    {
+                category: "temples",
+                name: " sri eswara swamy Temple jangareddigudem",
+                description: "Sri Eshwara Swamy Temple in Jangareddigudem, West Godavari district, Andhra Pradesh, is an ancient temple dedicated to Lord Shiva. ",
+                img: "https://d2u1z1lopyfwlx.cloudfront.net/thumbnails/bd071ec7-e225-5ca9-baab-cbf46114dc48/50732404-cf77-50c4-a871-ee7a132539fe.jpg",
+                imgAlt: "Colorful Hindu temple with detailed sculptures and decorative elements",
+                moreInfo: "https://en.wikipedia.org/wiki/Varasidhi_Vinayakaswamy_Temple"
+            },
+                                    {
+                category: "temples",
+                name: " sri chennakesava swamy Temple  Eluru",
+                description: "Sri Chennakesava Swamy Temple in Attili, West Godavari district, Andhra Pradesh, is a historic temple dedicated to Lord Vishnu as Chennakesava, an incarnation of the deity. ",
+                img: "https://d2u1z1lopyfwlx.cloudfront.net/thumbnails/1c7efe6a-7e3f-5ed4-b659-4fa51b99e329/b6a83390-2240-5fe8-a4c8-70dc693218d5.jpg",
+                imgAlt: "Colorful Hindu temple with detailed sculptures and decorative elements",
+                moreInfo: "https://en.wikipedia.org/wiki/Varasidhi_Vinayakaswamy_Temple"
+            },
+
+
+                 {
+                category: "Beaches",
+                name: " perupalem beach",
+                description: "Perupalem Beach is a serene coastal destination located along the Bay of Bengal in the West Godavari district of Andhra Pradesh, about 20 kilometers from Narasapuram town.",
+                img: "https://d2u1z1lopyfwlx.cloudfront.net/thumbnails/ad48b57e-4bc0-5461-82f3-5cb83845badb/faf45d1b-419d-59a9-9525-217bec7cf355.jpg",
+                imgAlt: "Colorful Hindu temple with detailed sculptures and decorative elements",
+                moreInfo: "https://en.wikipedia.org/wiki/Varasidhi_Vinayakaswamy_Temple"
+            },
+                             {
+                category: "Beaches",
+                name: "mollaparru beach",
+                description: "Mollaparru Beach is located about 22 kilometers from Narasapur town in the West Godavari district of Andhra Pradesh. ",
+                img: "https://d2u1z1lopyfwlx.cloudfront.net/thumbnails/4d743431-68f9-5d3a-ace3-5b034d7f965c/50732404-cf77-50c4-a871-ee7a132539fe.jpg",
+                imgAlt: "Colorful Hindu temple with detailed sculptures and decorative elements",
+                moreInfo: "https://en.wikipedia.org/wiki/Varasidhi_Vinayakaswamy_Temple"
+            },
+                             {
+                category: "Beaches",
+                name: "vemuladevi beach",
+                description: "Vemuladevi Beach is a beautiful, serene beach located in the village of Vemuladevi near Narasapur in the West Godavari district of Andhra Pradesh. This beach is known for its calm waters, clean sandy shores, and peaceful environment, making it ideal for relaxation and nature lovers. ",
+                img: "https://d2u1z1lopyfwlx.cloudfront.net/thumbnails/65b29dcf-7b3f-5956-8a18-4184e6532ea8/50732404-cf77-50c4-a871-ee7a132539fe.jpg",
+                imgAlt: "Colorful Hindu temple with detailed sculptures and decorative elements",
+                moreInfo: "https://en.wikipedia.org/wiki/Varasidhi_Vinayakaswamy_Temple"
+            },
+                             {
+                category: "Beaches",
+                name: "valandarevu godavari backwater point",
+                description: "valandarevu Godavari Backwater Point, located near Narasapuram in West Godavari district, Andhra Pradesh, is a serene spot along the Godavari River backwaters. ",
+                img: "https://d2u1z1lopyfwlx.cloudfront.net/thumbnails/cfa49d17-53db-5125-8132-9963bd3aacef/59dccd15-5c05-576d-a9aa-11a7febb2efb.jpg",
+                imgAlt: "Colorful Hindu temple with detailed sculptures and decorative elements",
+                moreInfo: "https://en.wikipedia.org/wiki/Varasidhi_Vinayakaswamy_Temple"
+            },
+            {
+                category: "tourist-places",
+                name: "kolleru bird sanctuary and kolleru lake",
+                description: "Kolleru Bird Sanctuary is a protected wetland sanctuary located in Andhra Pradesh, India, covering approximately 673 square kilometers across the Krishna and West Godavari districts.",
+                img: "https://www.iasgyan.in//ig-uploads/images//KOLLERU_WILDLIFE_SANCTUARY.png",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "https://en.wikipedia.org/wiki/Srikalahasti_Temple"
+            },
+            {
+                category: "tourist-places",
+                name: " Eluru budha park",
+                description: "Eluru Buddha Park, located in Eluru city of West Godavari district, Andhra Pradesh, is a serene and verdant park dedicated to Lord Buddha and the promotion of Buddhist teachings. ",
+                img: "https://upload.wikimedia.org/wikipedia/commons/1/14/Buddha_Park_in_Eluru_%28May_2019%29_9.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "https://en.wikipedia.org/wiki/Srikalahasti_Temple"
+            },
+          
+
+                        {
+                category: "tourist-places",
+                name: "munjuluru waterfalls",
+                description: "Munjuluru Waterfalls is a beautiful natural waterfall located in the West Godavari district of Andhra Pradesh near the village of Munjuluru, about 40 km from Jangareddigudem. ",
+                img: "https://d2u1z1lopyfwlx.cloudfront.net/thumbnails/d25eacd9-41a6-54ab-85e8-c9963b785eb9/06fedfb4-f47f-52e4-8664-a009b465513b.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "https://en.wikipedia.org/wiki/Srikalahasti_Temple"
+            }, 
+
+            
+          ];
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        const searchInput = document.getElementById('search-input');
+        const destinationsGrid = document.getElementById('destinations-grid');
+        let selectedCategories = new Set(['all']);
+        let searchTerm = '';
+
+        function updateDestinations() {
+            destinationsGrid.innerHTML = '';
+            
+            const filtered = destinations.filter(dest => {
+                const categoryMatch = selectedCategories.has('all') || selectedCategories.has(dest.category);
+                const searchMatch = searchTerm === '' || 
+                                  dest.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                                  dest.description.toLowerCase().includes(searchTerm.toLowerCase());
+                return categoryMatch && searchMatch;
+            });
+            
+            if (filtered.length === 0) {
+                destinationsGrid.innerHTML = '<p class="text-center col-span-full text-gray-500 py-8">No destinations found matching your criteria.</p>';
+                return;
+            }
+            
+            filtered.forEach(dest => {
+                const card = document.createElement('div');
+                card.className = 'card bg-white rounded-lg shadow-md overflow-hidden';
+                card.innerHTML = `
+                    <div class="card-image">
+                        <img src="${dest.img}" alt="${dest.imgAlt}" class="w-full h-48 object-cover" loading="lazy" />
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold mb-2 capitalize">${dest.name}</h3>
+                        <p class="text-gray-600 mb-2">${dest.description}</p>
+                        <a href="${dest.moreInfo}" target="_blank" rel="noopener noreferrer" class="more-info">More Info</a>
+                        <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full capitalize ml-2">${dest.category}</span>
+                    </div>
+                `;
+                destinationsGrid.appendChild(card);
+            });
+        }
+
+        // Category button event listeners
+        categoryButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const category = btn.dataset.category;
+                
+                if (category === 'all') {
+                    selectedCategories.clear();
+                    selectedCategories.add('all');
+                    categoryButtons.forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                } else {
+                    selectedCategories.delete('all');
+                    if (selectedCategories.has(category)) {
+                        selectedCategories.delete(category);
+                        btn.classList.remove('selected');
+                        
+                        // If no categories selected, show all
+                        if (selectedCategories.size === 0) {
+                            selectedCategories.add('all');
+                            document.querySelector('[data-category="all"]').classList.add('selected');
+                        }
+                    } else {
+                        selectedCategories.add(category);
+                        btn.classList.add('selected');
+                    }
+                }
+                
+                updateDestinations();
+            });
+        });
+
+        // Search functionality
+        searchInput.addEventListener('input', (e) => {
+            searchTerm = e.target.value;
+            updateDestinations();
+        });
+
+        // Initialize with all destinations
+        document.querySelector('[data-category="all"]').classList.add('selected');
+        updateDestinations();
+    </script>
+</body>
+</html>
