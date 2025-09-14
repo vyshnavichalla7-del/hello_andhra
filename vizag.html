@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Travel Destination Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(to right, #f3f4f6, #e5e7eb);
+            font-family: 'Inter', sans-serif;
+        }
+        .card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .category-btn {
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .category-btn.selected {
+            background-color: #3b82f6;
+            color: white;
+        }
+        .search-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+        }
+        a.more-info {
+            color: #2563eb;
+            font-weight: 600;
+            text-decoration: underline;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+        a.more-info:hover {
+            color: #1d4ed8;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="bg-gradient-to-r from-blue-500 to-purple-600 text-white py-8">
+        <div class="container mx-auto text-center px-4">
+            <h1 class="text-4xl font-bold mb-2">Explore Travel Destinations</h1>
+            <p class="text-lg max-w-3xl mx-auto">
+                Discover amazing temples, tourist spots, beaches, caves, forts, and waterfalls
+            </p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <section class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+            <div>
+                <h2 class="text-2xl font-semibold mb-4">Choose Your Interests</h2>
+                <div class="flex flex-wrap gap-2">
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="all">All</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="temples">Temples</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="Beaches">Beaches</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="tourist-places">tourist-places</button>
+                    
+                </div>
+            </div>
+            <div class="w-full md:w-64">
+                <input type="text" id="search-input" placeholder="Search destinations..." class="search-input w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-500" />
+            </div>
+        </section>
+
+        <section class="destinations">
+            <div id="destinations-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-6 mt-12">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2025 Travel Destination Explorer. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const destinations = [
+            // Temples
+            {
+                category: "temples",
+                name: "Shri varahalakshmi narsimha Temple- simhachalam",
+                description: "Sri Varahalakshmi Narasimha Swamy Temple, situated on Simhachalam Hill in Visakhapatnam, is dedicated to Lord Vishnu in his unique Varaha-Narasimha avatar. The idol is covered with sandalwood paste year-round, giving it the appearance of a Shiva lingam, and is revealed only once annually during Chandanotsavam. ",
+                img: "https://s7ap1.scene7.com/is/image/incredibleindia/varaha-lakshmi-narasimha-temple-visakhapatnam-andhra-pradesh-1-new-attr-hero?qlt=82&ts=1742151283427",
+                imgAlt: "Golden temple structure with intricate carvings and tall gopuram against blue sky",
+                moreInfo: "/home/pravalika/Desktop/dviz/temple2.html"
+            },
+            {
+                category: "temples",
+                name: "Kanaka mahalskhmi  Temple",
+                description: "Sri Kanaka Mahalakshmi Temple in Vizag, located at Burujupeta, is dedicated to Goddess Mahalakshmi and is the presiding deity of Visakhapatnam residents. The temple’s idol, considered self-manifested, was discovered in a well in 1912 and has a distinct tradition of having no roof, following the goddess’s wishes.",
+                img: "https://astropuja.com/media/magefan_blog/KanakaMahalakshmiVisakhapatnamAP.jpg",
+                imgAlt: "Colorful Hindu temple with detailed sculptures and decorative elements",
+                moreInfo: "/home/pravalika/Desktop/dviz/temple1.html"
+            },
+            {
+                category: "temples",
+                name: "Ashta lakshmi temple",
+                description: "The Ashtalakshmi Temple in Vizag is located at Kommadi, near Annamraju Nagar and GVP Engineering College, in the Madhurawada area of Visakhapatnam. This temple is dedicated to Goddess Lakshmi in her eight manifestations (Adi, Dhana, Dhanya, Gaja, Santana, Veera, Vijaya, and Vidya Lakshmi), symbolizing various forms of prosperity, wealth, health, and knowledge.",
+                img: "https://content.jdmagicbox.com/comp/visakhapatnam/r1/0891px891.x891.180226032958.z5r1/catalogue/ashta-lakshmi-temple-kommadi-visakhapatnam-temples-lqqh9p8ltv.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/dviz/temple3.html"
+            },
+            {
+                category: "temples",
+                name: "ISkon Temple",
+                description: "ISKCON Temple in Rushikonda, Vizag, is located at Hare Krishna Land, Beach Road, Sagar Nagar—a serene spot close to the Bay of Bengal. The temple is dedicated to Lord Krishna and blends beautiful marble architecture with spiritual ambiance, offering meditation halls, a multimedia theatre, and various community services",
+                img: "https://s7ap1.scene7.com/is/image/incredibleindia/iskcon-temple-vishakapatnam-andhra-pradesh-2-attr-hero?qlt=82&ts=1742152535175",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/dviz/temple4.html"
+            },
+            {
+                category: "temples",
+                name: "Sri venkateswara swamy -TTD-Temple",
+                description: "Sri Venkateswara Swamy Temple TTD in Vizag, also known as Sri Venkateswara Divya Kshetram, is located atop Rushikonda Hill close to the beach. It was built by Tirumala Tirupati Devasthanams (TTD) with an investment of about ₹28 crore and spans over 10 acres, offering a serene retreat with a view of the coastline. ",
+                img: "https://s7ap1.scene7.com/is/image/incredibleindia/sri-venkateswara-swamy-konda-temple-visakhapatnam-andhra-pradesh-2-attr-hero?qlt=82&ts=1742151114384",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/dviz/temple5.html"
+            },
+            {
+                category: "temples",
+                name: "Bhairavakona-vizag",
+                description: "Bhairavakona is a sacred site located in the Nallamala Hills of Prakasam district, Andhra Pradesh, known for its eight ancient rock-cut Shiva temples dating back to the 7th or 8th century CE. The temples feature intricate carvings of Shiva in different manifestations, as well as depictions of Brahma, Vishnu, Saraswati, Lakshmi, and Parvati, showcasing a fusion of Hindu deities.",
+                img: "https://travelsetu.com/apps/uploads/new_destinations_photos/destination/2024/01/01/f9f1dbf21d4234bf6a340f1010592001_1000x1000.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/dviz/temple6.html"
+            },
+            {
+                category: "temples",
+                name: " Jaganatha swamy  Temple",
+                description: "Jagannath Swamy Temple in Vizag is located in the Steel Plant Township area (Sector 9 and Sector 10) and also has notable temples in Poorna Market and Siripuram. The temple is modeled in the traditional style of the famous Puri Jagannath Temple and is dedicated to Lord Jagannath, a form of Lord Vishnu.",
+                img: "https://content.jdmagicbox.com/comp/visakhapatnam/q7/0891px891.x891.200627212650.v1q7/catalogue/sri-jagannatha-swamy-temple-ukkunagaram-visakhapatnam-temples-K3d1Uygiah.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/dviz/temple7.html"
+            },
+            {
+                category: "temples",
+                name: "Bhuneela sametha vaibhava venkateswaraswamy  Temple",
+                description: "Sri Sri Sri Bhuneela Sametha Vaibhava Venkateswara Swamy Temple is located in Madhurawada, Visakhapatnam. It is a well-regarded temple dedicated to Lord Venkateswara, attracting many devotees for regular worship and special occasions. The temple forms part of the local spiritual fabric, with a vibrant atmosphere especially during festivals. It is situated in a serene locality and known for maintaining traditional rituals and devotional services in Vizag. ",
+                img: "https://content.jdmagicbox.com/comp/visakhapatnam/s6/0891px891.x891.180304145112.y5s6/catalogue/sri-vaibhava-venkateswara-swamy-temple-visakhapatnam-temples-7ndjsvfdf1.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/dviz/temple8.html"
+            },
+            {
+                category: "temples",
+                name: " trimukha lingeswara panchayathana devalayam",
+                description: "sri Sri Sri Trimukha Vigneswara Panchayathana Devalayam is a temple located in Vizag, dedicated to Lord Vigneswara (Ganesha) along with other deities in the Panchayatana tradition, which typically includes worship of five gods together. It is one of the spiritual places contributing to the rich temple culture of Visakhapatnam, known for its devotional rituals and community worship",
+                img: "https://files.yappe.in/place/small/sri-sri-sri-trimukha-vigneswara-panchayathana-devalayam-10431561.webp",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/dviz/temple9.html"
+            },
+            {
+                category: "temples",
+                name: " Brahmalingeswara Temple-bhalighattam",
+                description: "The Brahma Temple in Balighattam (Balikatham), near Narsipatnam in Visakhapatnam district, Andhra Pradesh, is dedicated to Brahmalingeswara Swamy, an incarnation of Lord Shiva. According to local legend, the temple was built by Lord Brahma, and the adjacent river is believed to have been created by Lord Vishnu in his Varaha (boar) avatar; the river is thus named Varahanadi. ",
+                img: "https://www.justahotels.com/wp-content/uploads/2022/09/Brahma-Temples-In-India-1.png",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/dviz/temple10.html"
+            },
+            {
+                category: "temples",
+                name: "kanyaka parameswari Temple",
+                description: "The Kanika Parameshwari Temple in Anakapalli is dedicated to Goddess Vasavi Kanyaka Parameswari, a revered deity primarily worshiped by the Komati community in Andhra Pradesh. The temple holds historical and spiritual significance, with roots tracing back to legends about Vasavi, who is considered an incarnation of Adi Parashakti, symbolizing purity and protection of dharma. ",
+                img: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjyuN3VO0NaZwrijxCoLXkuvtCk-ed6gDWaXnBu9oKnDgga65_g6H0TTRpkRONXgvtXd_D88NZx2ZPdH0IWS8vI5nUVUiWohBWN9s9FEIby-ZL03SjqsRrKHCSZwxgCwQiBmjr3pAOIpKuR/s1600/penugonda+temple+.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/dviz/temple11.html"
+            },
+            {
+                category: "temples",
+                name: "sri dakshina kasi viseswara swamy  Temple",
+                description: "Sri Viseswara Swamy Temple in Mallavaram, Visakhapatnam district, is a notable temple dedicated to Lord Shiva (Visweswara Swamy) widely respected for its spiritual significance.",
+                img: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgVqjgkKIhBv68nSTE1wYbLpMBwG1aKBzO3os7LaOohhQ49I9-pmqTn3OwU-X6DgbZndmmCGMw_K47CXh391Lbi8jBnqFUA7l1IrnodCoDENXIxTxAiTPLMzJVbGfwtQRs9kQ0spZPdZ_s/s1600/Vasavi_Kanyaka_ParameswariTemple.JPG",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/dviz/temple12.html"
+            },
+            {
+                category: "temples",
+                name: "Ramalingeswara swamy  Temple-Jagayyapet",
+                description: "Sri Ramalingeswara Swamy Temple, located in the Jagayyapet area, is a historic temple dedicated to Lord Shiva, known as Ramalingeswara Swamy. The temple dates back to the Chola period (12th century AD) and is renowned for its unique bell that is said to reverberate 108 times when struck once",
+                img: "https://api.blessingsonthenet.com/uploads/microsite/ff3f4c403f7f4f33f7b7c473bee25bf4-1699028977867-Mallikarjuna-Temple-Srisailam.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/dviz/temple13.html"
+            },
+            //beaches
+            {
+                category: "Beaches",
+                name: "RK beach",
+                description: "Ramakrishna Beach, popularly known as RK Beach, is located on the east coast of the Bay of Bengal in Visakhapatnam, Andhra Pradesh. It is named after the nearby Ramakrishna Mission Ashram. ",
+                img: "https://d2u1z1lopyfwlx.cloudfront.net/thumbnails/cd943b7e-d937-5e32-807b-9656b9ec348d/041ea36b-f088-5c59-be3b-4d640cd3480e.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/dviz/beach1.html"
+            },
+            {
+                category: "Beaches",
+                name: "lawson's bay beach",
+                description: "Lawson's Bay Beach in Visakhapatnam is considered an extension of the popular Ramakrishna (RK) Beach. It is known for its calm, serene environment with lush greenery and whitish sands, making it an ideal place for swimming, sunbathing, and surfing.",
+                img: "https://content.jdmagicbox.com/comp/visakhapatnam/k9/0891px891.x891.141218163122.n3k9/catalogue/lawsons-bay-beach-kailasapuram-visakhapatnam-tourist-attraction-o64pan.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/dviz/beach2.html"
+            },
+            {
+                category: "Beaches",
+                name: " yarada beach",
+                description: "Yarada Beach is a beautiful and serene beach located about 15 kilometers from Visakhapatnam city in Andhra Pradesh. It is surrounded by hills and lush greenery, offering a peaceful atmosphere with clean golden sands and calm blue waters.",
+                img: "https://vizagtourism.org.in/images/places-to-visit/header/yarada-beach-vizag-tourism-entry-fee-timings-holidays-reviews-header.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/dviz/beach3.html"
+            },
+            {
+                category: "Beaches",
+                name: "bheemili beach",
+                description: "Bheemili Beach, also known as Bheemunipatnam Beach, is a serene and picturesque beach located about 24 kilometers from Visakhapatnam city in Andhra Pradesh. It is situated at the confluence of the Bay of Bengal and the Gosthani River and is surrounded by coconut plantations, palm groves, and lush greenery.",
+                img: "https://static.toiimg.com/thumb/msid-69891388,width-1070,height-580,resizemode-75,imgsize-1139164,pt-32,y_pad-40/69891388.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/dviz/beach4.html"
+            },
+            {
+                category: "Beaches",
+                name: " rushikonda beach",
+                description: "Rushikonda Beach is a picturesque beach located about 8 kilometers from Visakhapatnam city, Andhra Pradesh. Known as the Jewel of the East Coast, it features golden sands, clear blue waters, and lush green surroundings with coconut trees.",
+                img: "https://vizagtourism.org.in/images/places-to-visit/header/rishikonda-beach-vizag-tourism-entry-fee-timings-holidays-reviews-header.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/dviz/beach5.html"
+            },
+          
+
+                        {
+                category: "tourist-places",
+                name: "kailasagiri hill park",
+                description: "Kailash Giri Hill Park in Visakhapatnam, also known as Kailasagiri, is a popular hilltop park sprawling over 380 acres at an altitude of 360 feet. It offers panoramic views of the city and the Bay of Bengal, with attractions including the iconic 40-foot tall statues of Lord Shiva and Goddess Parvati",
+                img: "https://www.bloggymaster.com/wp-content/uploads/2024/09/kailasagiri-visakhapatnam-scenic-hill-park-amp-attractions.webp",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/dviz/tp1.html"
+            },
+                        {
+                category: "tourist-places",
+                name: "1NS kursura submarine museum",
+                description: "INS Kursura Submarine Museum in Visakhapatnam is located on Ramakrishna Beach and is famous as the first submarine turned into a museum in South Asia and second in the world. The Soviet-built diesel-electric submarine was commissioned in 1969 and served the Indian Navy for 31 years, including during the 1971 Indo-Pakistan war.",
+                img: "https://papikondalu-tour-package.com/ap-tourism-papikondalu-tour-package/papikondalu/INS-Kurusura-Submarine-Museum-Vizag.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/dviz/tp2.html"
+            },
+                        {
+                category: "tourist-places",
+                name: " indira gandhi zoological park ",
+                description: "Indira Gandhi Zoological Park in Visakhapatnam is one of the largest and most popular zoos in India, sprawling over 625 acres amidst the Kambalakonda Reserve Forest. Established in 1977 and named after the former Prime Minister of India, it is home to nearly 80 species of animals, birds, and reptiles in naturalistic habitats.",
+                img: "https://c8.alamy.com/comp/DAXX5N/bust-of-indira-gandhi-at-beach-visakhapatnam-andhra-pradesh-india-DAXX5N.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/dviz/tp3.html"
+            },
+                        {
+                category: "tourist-places",
+                name: " VUDA park",
+                description: "VUDA Park, also known as Taraka Rama Park, is a prominent tourist attraction located near Ramakrishna Beach in Visakhapatnam. It spans 55 acres and features beautiful lawns, over 2500 shady trees, and various species of flowers. ",
+                img: "https://vizagtourism.org.in/images/places-to-visit/header/vuda-park-vizag-tourism-entry-fee-timings-holidays-reviews-header.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/dviz/tp4.html"
+            },
+                        {
+                category: "tourist-places",
+                name: " TU142 aircraft museum",
+                description: "The TU-142 Aircraft Museum in Visakhapatnam is a preserved Tupolev TU-142, a long-range maritime reconnaissance and anti-submarine warfare aircraft that served the Indian Navy for 29 years. It was retired in 2017 after putting in 30,000 hours of accident-free flying.",
+                img: "https://www.yovizag.com/wp-content/uploads/2021/09/tu-142-aircraft-museum_WEB.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/dviz/tp5.html"
+            },
+                        {
+                category: "tourist-places",
+                name: "victory at sea memorial",
+                description: "The Victory at Sea Memorial in Visakhapatnam is a war memorial dedicated to the Indian Navy and the Eastern Naval Command sailors who played a crucial role during the Indo-Pakistani War of 1971. ",
+                img: "https://d2u1z1lopyfwlx.cloudfront.net/thumbnails/bd2780a9-b16e-575d-9bfa-f7bb1e146833/749f7491-f11b-5c51-8487-8e1f8a3acdc5.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/dviz/tp6.html"
+            },
+                        {
+                category: "tourist-places",
+                name: "dolphin's nose& lighthouse",
+                description: "Dolphin's Nose is a prominent rocky headland located in Visakhapatnam, positioned between Yarada Beach and Gangavaram Port. The hill gets its name because its shape resembles a dolphin's nose. ",
+                img: "https://d2u1z1lopyfwlx.cloudfront.net/thumbnails/946c687d-f066-5f30-9853-973852b60d3d/1e1e84e1-3323-5752-bec2-8f2135a5e82f.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/dviz/tp7.html"
+            },
+                        {
+                category: "tourist-places",
+                name: "vishaka museum",
+                description: "visakha Museum, officially known as Visakhapatnam Municipal Corporation Museum, is located on Beach Road near RK Beach in Visakhapatnam. Established in 1991, the museum preserves and showcases the historical treasures and artifacts of the Kalinga Andhra region.",
+                img: "https://d2u1z1lopyfwlx.cloudfront.net/thumbnails/c9380bbb-44c7-525f-b121-04c7c31064a4/c9339e9f-bba5-526b-b269-dfea6947a8dd.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/dviz/tp8.html"
+            },
+                        {
+                category: "tourist-places",
+                name: "tenneti park",
+                description: "Tenneti Park, also known as Vuda Tenneti Park, is an urban park located on Beach Road in Jodugullapalem, Visakhapatnam, overlooking the Bay of Bengal. It is one of the oldest parks in the city and is named after Tenneti Viswanadham, a freedom fighter and political leader. ",
+                img: "https://d2u1z1lopyfwlx.cloudfront.net/thumbnails/cb27b551-7777-59ed-97d1-c072d064634f/e6abed43-7d81-5844-a1db-03ba9bf2f610.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/dviz/tp9.html"
+            },
+                        {
+                category: "tourist-places",
+                name: "araku valley",
+                description: "Aaku Valley is a picturesque hill station located about 120 kilometers from Visakhapatnam in Andhra Pradesh. Nestled in the Eastern Ghats at an altitude of 911 meters above sea level, this scenic valley is famous for its lush greenery, coffee plantations, waterfalls, and pleasant climate",
+                img: "https://d2u1z1lopyfwlx.cloudfront.net/thumbnails/990a3bb0-6df1-5770-908e-4adfd81d206c/8997a4cb-57d5-5fa7-963f-55078594cd9b.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/dviz/tp10.html"
+            },
+                        {
+                category: "tourist-places",
+                name: "borra caves",
+                description: "Borra Caves are limestone caves located in the Ananthagiri hills of the Araku Valley in Andhra Pradesh, India. These caves are situated at an elevation of approximately 705 meters (2,313 feet) and are part of the Eastern Ghats. ",
+                img: "https://i0.wp.com/weekendyaari.in/wp-content/uploads/2024/09/caves-1.jpg?resize=800%2C530&ssl=1",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/dviz/tp11.html"
+            },
+                        {
+                category: "tourist-places",
+                name: "tyda nature camp",
+                description: "Tyda Nature Camp, also known as Jungle Bells, is located about 40 kilometers from Araku Valley in the Eastern Ghats. It is a tranquil tribal village and eco-tourism spot known for its lush greenery and forested hills.",
+                img: "https://d2u1z1lopyfwlx.cloudfront.net/thumbnails/5ad1170e-b728-5969-a2bf-05461d4099f5/309ee217-38ec-55f8-b70c-644aca1cdd41.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/dviz/tp12.html"
+            },
+                        {
+                category: "tourist-places",
+                name: "kondakarla ava lake and bird sanctuary",
+                description: "Kondakarla Ava is a large natural freshwater lake and bird sanctuary located in Kondakarla village, Atchutapuram Mandal, about 50 km from Visakhapatnam, Andhra Pradesh. It covers approximately 1,832 acres and is surrounded by hills and coconut trees, providing a unique ecosystem with wet evergreen forests.",
+                img: "https://d2u1z1lopyfwlx.cloudfront.net/thumbnails/4ccfe214-a32c-5f3e-bcd3-ee25456b82a5/1e1e84e1-3323-5752-bec2-8f2135a5e82f.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/dviz/tp13.html"
+            },
+                        {
+                category: "tourist-places",
+                name: "lambasingi",
+                description: "Lambasingi, often called the Kashmir of Andhra Pradesh, is a picturesque hill station located in the Eastern Ghats, about 90 kilometers from Visakhapatnam. It is famous for its cool climate, coffee and pepper plantations, and stunning natural beauty including lush hills and misty valleys.",
+                img: "https://i0.wp.com/www.inditrip.in/wp-content/uploads/2018/06/lambasingi.jpg?resize=1024%2C768&ssl=1",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/dviz/tp14.html"
+            },
+                        {
+                category: "tourist-places",
+                name: "katiki water falls",
+                description: "Katiki Waterfalls, located near Borra Caves in Araku Valley, Andhra Pradesh, is a scenic 50 feet high waterfall formed by the Gosthani River. It is a popular spot for trekking, nature walks, and picnics, with a 20-30 minute trek through lush forests to reach the falls. ",
+                img: "https://d2u1z1lopyfwlx.cloudfront.net/thumbnails/de287f4f-46c6-5193-b2e4-7f109eb80267/e5053668-ce07-506a-a756-5d89634e57a8.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/dviz/tp15.html"
+            },
+
+
+            
+          ];
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        const searchInput = document.getElementById('search-input');
+        const destinationsGrid = document.getElementById('destinations-grid');
+        let selectedCategories = new Set(['all']);
+        let searchTerm = '';
+
+        function updateDestinations() {
+            destinationsGrid.innerHTML = '';
+            
+            const filtered = destinations.filter(dest => {
+                const categoryMatch = selectedCategories.has('all') || selectedCategories.has(dest.category);
+                const searchMatch = searchTerm === '' || 
+                                  dest.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                                  dest.description.toLowerCase().includes(searchTerm.toLowerCase());
+                return categoryMatch && searchMatch;
+            });
+            
+            if (filtered.length === 0) {
+                destinationsGrid.innerHTML = '<p class="text-center col-span-full text-gray-500 py-8">No destinations found matching your criteria.</p>';
+                return;
+            }
+            
+            filtered.forEach(dest => {
+                const card = document.createElement('div');
+                card.className = 'card bg-white rounded-lg shadow-md overflow-hidden';
+                card.innerHTML = `
+                    <div class="card-image">
+                        <img src="${dest.img}" alt="${dest.imgAlt}" class="w-full h-48 object-cover" loading="lazy" />
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold mb-2 capitalize">${dest.name}</h3>
+                        <p class="text-gray-600 mb-2">${dest.description}</p>
+                        <a href="${dest.moreInfo}" target="_blank" rel="noopener noreferrer" class="more-info">More Info</a>
+                        <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full capitalize ml-2">${dest.category}</span>
+                    </div>
+                `;
+                destinationsGrid.appendChild(card);
+            });
+        }
+
+        // Category button event listeners
+        categoryButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const category = btn.dataset.category;
+                
+                if (category === 'all') {
+                    selectedCategories.clear();
+                    selectedCategories.add('all');
+                    categoryButtons.forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                } else {
+                    selectedCategories.delete('all');
+                    if (selectedCategories.has(category)) {
+                        selectedCategories.delete(category);
+                        btn.classList.remove('selected');
+                        
+                        // If no categories selected, show all
+                        if (selectedCategories.size === 0) {
+                            selectedCategories.add('all');
+                            document.querySelector('[data-category="all"]').classList.add('selected');
+                        }
+                    } else {
+                        selectedCategories.add(category);
+                        btn.classList.add('selected');
+                    }
+                }
+                
+                updateDestinations();
+            });
+        });
+
+        // Search functionality
+        searchInput.addEventListener('input', (e) => {
+            searchTerm = e.target.value;
+            updateDestinations();
+        });
+
+        // Initialize with all destinations
+        document.querySelector('[data-category="all"]').classList.add('selected');
+        updateDestinations();
+    </script>
+</body>
+</html>
