@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Travel Destination Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(to right, #f3f4f6, #e5e7eb);
+
+            font-family: 'Inter', sans-serif;
+        }
+        .card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .category-btn {
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .category-btn.selected {
+            background-color: #3b82f6;
+            color: white;
+        }
+        .search-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+        }
+        a.more-info {
+            color: #2563eb;
+            font-weight: 600;
+            text-decoration: underline;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+        a.more-info:hover {
+            color: #1d4ed8;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="bg-gradient-to-r from-blue-500 to-purple-600 text-white py-8">
+        <div class="container mx-auto text-center px-4">
+            <h1 class="text-4xl font-bold mb-2">Explore Travel Destinations</h1>
+            <p class="text-lg max-w-3xl mx-auto">
+                Discover amazing temples, tourist spots, beaches, caves, forts, and waterfalls
+            </p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <section class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+            <div>
+                <h2 class="text-2xl font-semibold mb-4">Choose Your Interests</h2>
+                <div class="flex flex-wrap gap-2">
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="all">All</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="temples">Temples</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="tourist-places">Tourist Places</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="forts">Forts</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="waterfalls">Waterfalls</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="beaches">Beaches</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="caves">Caves</button>
+                </div>
+            </div>
+            <div class="w-full md:w-64">
+                <input type="text" id="search-input" placeholder="Search destinations..." class="search-input w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-500" />
+            </div>
+        </section>
+
+        <section class="destinations">
+            <div id="destinations-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-6 mt-12">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2025 Travel Destination Explorer. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const destinations = [
+
+            // Temples
+            {
+                category: "temples",
+
+                name: "Tripuranthakam Bala thripura devi Temple",
+                description: "Famous for its Tripurantakeswara Temple, Tripurantakam is a village in Prakasam district of the Indian state of Andhra Pradesh under Tripurantakam mandal in Markapur revenue division. As per Siva Puranas, Siva destroyed Tripurasuras (3 demons ruling three cities) here.",
+
+                img: "https://yatradham.org/media/catalog/product/t/r/tripurantakam-bala-tripua-sundari-devi-temple.jpg",
+                imgAlt: "Golden temple structure with intricate carvings and tall gopuram against blue sky",
+                moreInfo: "/home/pravalika/Desktop/templ1.html"
+
+            },
+            {
+
+               category: "temples",
+
+                name: "Chenna Kesava Swamy  Temple",
+                description: " Temple Chenna Kesava Swamy Temple located at Markapuram town of Prakasam district in Andhra Pradesh is a famous temple of Lord Maha.Vishnu. Sri Maha Vishnu is the prime deity in this temple who is also known as Chenna Kesava Swamy. The deity is accompanied by his consort Goddess Sri Mahalakshmi",
+
+                img: "https://lh5.googleusercontent.com/p/AF1QipMVpfRT4XAhWwoOItsi1Ksk5feLjOXN5sWfaNps=w1080-k-no",
+
+                imgAlt: "Colorful Hindu temple with detailed sculptures and decorative elements",
+
+                moreInfo: "/home/pravalika/Desktop/templ2.html"
+
+            },
+
+            {
+
+                category: "temples",
+                name: "Sri vasavi Kanyaka parameswari temple",
+
+                description: "The temple is built in strict accordance with vastu sastra and so possessing sturdy prakars, tall gopuras, spacious courtyards, several minishrines, vast garbagrihas, grand mukhamandapas etc. it faces east and a tall tower surmounting over the broad mahadwara beckons the visitors with its beautiful sculptural pieces adoring it from top to bottom and on all four sides too",
+
+                img: "https://4.bp.blogspot.com/-USBWz3e0bIw/VSOISJ7-2gI/AAAAAAAACkc/hGn-JGPnCLk/s1600/a16.jpg",
+
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/templ3.html"
+
+            },
+
+            {
+
+                category: "temples",
+                name: "Sri prasanna venkateswara swamy Temple",
+
+                description: "The temple is dedicated to Lord Venkateswara, referred to as Prasanna Venkateswara. Unlike other typical Venkateswara temples the presiding deity has its right hand in Abhaya posture. The temple was constructed in 1232 AD by King of Karvetinagaram, Sri Venkata Perumalaraju Brahmadeva Maharaj.",
+
+                img: "https://tirupatitirumalainfo.com/wp-content/uploads/2016/09/appalayagunta2.jpg",
+
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+
+                moreInfo: "/home/pravalika/Desktop/templ4.html"
+
+            },
+
+            {
+                category: "temples",
+
+                name: "Sri Abaya Anjaneya swamy Temple",
+
+                description: "The temple's main deity is Lord Hanuman, and we believe that he possesses immense power who can give blessings and remove obstacles from the lives of his devotees",
+
+                img: "https://1.bp.blogspot.com/-LvWJX5Llw8M/XHTbom6FpaI/AAAAAAAALQw/GL03eYDIQSg2RHzepGkTSAz4iVI8pBg0gCLcBGAs/s1600/Paritala%2BSri%2BAbhaya%2BAnjaneya%2BSwamy%2BTemple.jpg",
+
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+
+                moreInfo: "/home/pravalika/Desktop/templ5.html"
+
+            },
+
+            {
+
+                category: "temples",
+
+                name: "Sri Lakshmi Narasimha Swamy Temple",
+
+                description: "This temple is also called Malakonda Temple and located at Valetivari Palem, Prakasham District, Andhra Pradesh. Shri Malyadri Lakshmi Narasimha Swami temple is one of the famous and vital holy abodes of Lord Narasimha.",
+
+                img: "https://i0.wp.com/dakshinapatha.com/wp-content/uploads/2020/07/Malakonda_Temple.jpg?w=751&ssl=1",
+
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+
+                moreInfo: "/home/pravalika/Desktop/templ6.html"
+
+            },
+
+            {
+
+                category: "temples",
+
+                name: "Sri Anjaneya swamy and Nagendra Swamy Temple",
+
+                description: "Sri Anjaneya swamy and Nagendra Swamy temple, tripuranthakam is located in Tripurantakam. Sri Anjaneya swamy and Nagendra Swamy temple, tripuranthakam is working in Hindu temples activities",
+
+                img: "https://live.staticflickr.com/4463/37629995671_5436813514_b.jpg",
+
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+
+                moreInfo: "/home/pravalika/Desktop/templ7.html"
+
+            },
+
+            {
+
+                category: "temples",
+
+                name: "Singarakonda Temple",
+                description: "Singarakonda Lakshmi Narasimha Swamy Temple is a revered Hindu temple situated atop a scenic hill in Singarayakonda, Prakasam district, Andhra Pradesh. Known as Dakshina Simhachalam, the temple holds great religious significance and attracts thousands of devotees every year",
+
+                img: "https://travellerkaka.com/wp-content/uploads/2025/02/Singarakonda-Lakshmi-Narasimha-Swamy-Temple-2-1920x1005.png",
+
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+
+                moreInfo: "/home/pravalika/Desktop/templ8.html"
+
+            },
+            {
+
+                category: "temples",
+
+                name: "Prudulgiri Sri Lakshmi Narasimha Swamy Temple",
+                description: "Podili is a Town and a Mandal in Prakasam district in the state of Andhra Pradesh in India. Before British Rule its name was Prudhulapuri, meaning Headquarters of the Universe, there is Purana reference to this related to Prudhu Chakravarthi",
+
+                img: "https://templesofindia.org/assets/compressed/a9353b730cfaedab45f360df6bec3256_942.png",
+
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+
+                moreInfo: "/home/pravalika/Desktop/templ9.html"
+
+            },
+
+            {
+
+                category: "temples",
+
+                name: "Sri Gunti gangamma Temple",
+
+                description: "Goddess Gangamma Temple is in the outskirts of Dhenuva Konda, Garlapadu village in Prakasam District of Andhra Pradesh, India. Sunday is preferable day to offer pooja in the temple. Goddess Gangamma is a powerful figure to the Yadava community. They celebrate Jatara for her on the full moon in April",
+
+                img: "https://i.ytimg.com/vi/YPjrlTMt8Zk/hqdefault.jpg?sqp=-oaymwEmCOADEOgC8quKqQMa8AEB-AHyAYAC6AKKAgwIABABGHIgQCg9MA8=&rs=AOn4CLDevgciKjzbaI2quyvdW86CeXq19A",
+
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+
+                moreInfo: "/home/pravalika/Desktop/templ10.html"
+
+            },
+            {
+                category: "forts",
+                name: "Kanigiri Fort",
+                description:"Kanigiri Fort is a historic monument and tourist attraction located in Yadavalli, Kanigiri Mandal, Prakasam District, Andhra Pradesh. It's situated on a hill within the town of Kanigiri, a place known for being the historical capital of the kingdom of Katama Raju.",
+                img: "https://tripxl.com/blog/wp-content/uploads/2024/09/Ancient-Architecture.jpg",
+                imgAlt: "Ancient stone fort on a hill with historical architecture",
+                moreInfo: "/home/pravalika/Desktop/fort1.html"
+            },
+             {
+                category: "waterfalls",
+                name: "Bhairavakona waterfalls",
+                description: "Bhairavakona Waterfalls are located in the Nallamala Hills of the Prakasam district, Andhra Pradesh, near an ancient site with rock-cut cave temples. Cascading from a height of over 200 meters, the waterfalls are a significant natural and spiritual attraction, creating a serene environment around the Shiva temples",
+                img: "https://www.accessindiantourism.com/wp-content/uploads/2015/09/Prakasam-Bhairavakona-Waterfalls-7.jpg",
+                imgAlt: "Majestic waterfall cascading down rocky cliffs into a misty pool",
+                moreInfo: "/home/pravalika/Desktop/wat21.html"
+            },
+            {
+                category: "waterfalls",
+                name: "mogali gundalu waterfalls",
+                description: "Mogali Gundalu Waterfall is a serene tourist destination in Tallur, Prakasam District, Andhra Pradesh, offering a peaceful natural retreat for nature lovers and adventure seekers, particularly during the monsoon season.",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyEHQrA1N1DmC0SbveLk3IRslfLohP6QWIfg&s",
+                imgAlt: "Historic hill fort with stone walls and strategic location",
+                moreInfo: "/home/pravalika/Desktop/wat22.html"
+            },
+           
+             {
+                category: "beaches",
+                name: "pakala beach",
+                description: "Pakala Beach is a serene and beautiful, though relatively undeveloped, coastal area in the Prakasam District of Andhra Pradesh, India.",
+                img: "https://th.bing.com/th/id/R.47dfd16cad7617119c2554230bb69a90?rik=0FTpyOCCAOCEhA&riu=http%3a%2f%2fc1.staticflickr.com%2f8%2f7247%2f7006118790_2e75bdeded.jpg&ehk=O2qpmKH%2fvxg0PIWTfommPE5PPAZvn%2beuE2MwNRYkMAk%3d&risl=&pid=ImgRaw&r=0",
+                imgAlt: "Majestic waterfall cascading down rocky cliffs into a misty pool",
+                moreInfo: "/home/pravalika/Desktop/pakala beach.html"
+            },
+            {
+                category: "waterfalls",
+                name: "Kothapatnam Beach",
+                description: "Kothapatnam Beach is one amongst the top attractions in Ongole. Located 18 km from the city, the beach is a great source of entertainment for local people and tourists.",
+                img: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/11/ba/16/6e/very-less-tides.jpg?w=1200&h=-1&s=1",
+                imgAlt: "Historic hill fort with stone walls and strategic location",
+                moreInfo: "/home/pravalika/Desktop/kothpatnam beach.html"
+            },
+            {
+                category: "beaches",
+                name: "chirala beach",
+                description: "Chirala Beach, located in the Prakasam district of Andhra Pradesh, is a beautiful coastal destination known for its pristine shoreline, golden sand, and tranquil surroundings. It is a popular beach getaway for tourists seeking a serene and relaxing retreat",
+                img: "https://hblimg.mmtcdn.com/content/hubble/img/chirala/mmt/destination/m_destination_Chirala_landscape_l_400_640.jpg",
+                imgAlt: "Historic hill fort with stone walls and strategic location",
+                moreInfo: "/home/pravalika/Desktop/chirala beach.html"
+            },
+            {
+                category: "beaches",
+                name: "Ramapuram Beach",
+                description: "Ramapuram Beach is long and covered with sand. The descent to the water is very gentle and doesn't require aqua socks. The infrastructure of the beach is essential: toilets, restaurants. The beach is a popular for different groups of leisures such as: campers or those who appreciate a quiet rest.",
+                img:"ttps://thetravelb.com/wp-content/uploads/2022/04/6.jpg",
+                imgAlt: "Historic hill fort with stone walls and strategic location",
+                moreInfo: "/home/pravalika/Desktop/ramapuram beach.html"
+            },
+            {
+                category: "beaches",
+                name: "madanur beach",
+                description: "Madanur Beach is situated in the Bay of Bengal (part of Indian ocean) and ranks the 76th among 115 beaches of the Andhra Pradesh region. The distance to its main city - Ongole is 18 km. The nearest settlement is Madanuru, the centre of which is 1.2 km away",
+                img: "https://i.ytimg.com/vi/bTScvd53HIY/hq2.jpg?sqp=-oaymwEoCOADEOgC8quKqQMcGADwAQH4AZQDgALQBYoCDAgAEAEYZSBVKFMwDw==&rs=AOn4CLDWmzkAD0fjSgz5zi6qldr835TXJg",
+                imgAlt: "Historic hill fort with stone walls and strategic location",
+                moreInfo: "/home/pravalika/Desktop/madanuru beach.html"
+            },
+       ];
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        const searchInput = document.getElementById('search-input');
+        const destinationsGrid = document.getElementById('destinations-grid');
+        let selectedCategories = new Set(['all']);
+        let searchTerm = '';
+
+        function updateDestinations() {
+            destinationsGrid.innerHTML = '';
+            
+            const filtered = destinations.filter(dest => {
+                const categoryMatch = selectedCategories.has('all') || selectedCategories.has(dest.category);
+                const searchMatch = searchTerm === '' || 
+                                  dest.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+
+                                  dest.description.toLowerCase().includes(searchTerm.toLowerCase());
+                return categoryMatch && searchMatch;
+
+            });
+
+            
+            if (filtered.length === 0) {
+                destinationsGrid.innerHTML = '<p class="text-center col-span-full text-gray-500 py-8">No destinations found matching your criteria.</p>';
+                return;
+            }
+            
+            filtered.forEach(dest => {
+                const card = document.createElement('div');
+                card.className = 'card bg-white rounded-lg shadow-md overflow-hidden';
+                card.innerHTML = `
+                    <div class="card-image">
+                        <img src="${dest.img}" alt="${dest.imgAlt}" class="w-full h-48 object-cover" loading="lazy" />
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold mb-2 capitalize">${dest.name}</h3>
+                        <p class="text-gray-600 mb-2">${dest.description}</p>
+                        <a href="${dest.moreInfo}" target="_blank" rel="noopener noreferrer" class="more-info">More Info</a>
+                        <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full capitalize ml-2">${dest.category}</span>
+                    </div>
+                `;
+                destinationsGrid.appendChild(card);
+            });
+        }
+
+        // Category button event listeners
+        categoryButtons.forEach(btn => {
+
+            btn.addEventListener('click', () => {
+                const category = btn.dataset.category;
+                
+
+                if (category === 'all') {
+                    selectedCategories.clear();
+
+                    selectedCategories.add('all');
+                    categoryButtons.forEach(b => b.classList.remove('selected'));
+
+                    btn.classList.add('selected');
+
+                } else {
+                    selectedCategories.delete('all');
+
+                    if (selectedCategories.has(category)) {
+
+                        selectedCategories.delete(category);
+
+                        btn.classList.remove('selected');
+                        
+
+                        // If no categories selected, show all
+
+                        if (selectedCategories.size === 0) {
+
+                            selectedCategories.add('all');
+
+                            document.querySelector('[data-category="all"]').classList.add('selected');
+
+                        }
+
+                    } else {
+
+                        selectedCategories.add(category);
+
+                        btn.classList.add('selected');
+
+                    }
+
+                }
+
+                
+
+                updateDestinations();
+
+            });
+
+        });
+
+        // Search functionality
+        searchInput.addEventListener('input', (e) => {
+
+            searchTerm = e.target.value;
+
+            updateDestinations();
+
+        });
+
+        // Initialize with all destinations
+        document.querySelector('[data-category="all"]').classList.add('selected');
+        updateDestinations();
+    </script>
+</body>
+</html>

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Travel Destination Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(to right, #f3f4f6, #e5e7eb);
+            font-family: 'Inter', sans-serif;
+        }
+        .card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .category-btn {
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .category-btn.selected {
+            background-color: #3b82f6;
+            color: white;
+        }
+        .search-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+        }
+        a.more-info {
+            color: #2563eb;
+            font-weight: 600;
+            text-decoration: underline;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+        a.more-info:hover {
+            color: #1d4ed8;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="bg-gradient-to-r from-blue-500 to-purple-600 text-white py-8">
+        <div class="container mx-auto text-center px-4">
+            <h1 class="text-4xl font-bold mb-2">Explore Travel Destinations</h1>
+            <p class="text-lg max-w-3xl mx-auto">
+                Discover amazing temples, tourist spots, beaches, caves, forts, and waterfalls
+            </p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <section class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+            <div>
+                <h2 class="text-2xl font-semibold mb-4">Choose Your Interests</h2>
+                <div class="flex flex-wrap gap-2">
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="all">All</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="temples">Temples</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="tourist-places">Tourist Places</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="forts">Forts</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="waterfalls">Waterfalls</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="beaches">Beaches</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="caves">Caves</button>
+                </div>
+            </div>
+            <div class="w-full md:w-64">
+                <input type="text" id="search-input" placeholder="Search destinations..." class="search-input w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-500" />
+            </div>
+        </section>
+
+        <section class="destinations">
+            <div id="destinations-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-6 mt-12">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 Travel Destination Explorer. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const destinations = [
+            {
+                category: "temples",
+                name: "Veerabadra Swamy Temple",
+                description: "A magnificent temple complex dedicated to Lord Shiva, known for its stunning architecture.",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRe2_KrVHaG8yhfrCb02bkZinlLf-F4NX-ZYzZjVJG2f37nYWo1H3-r4ehSAWwT-4G9cQg&usqp=CAU",
+                imgAlt: "Golden temple structure with intricate carvings and tall gopuram against blue sky",
+                moreInfo: "/home/pravalika/Desktop/temple21.html"
+            },
+            {
+                category: "temples",
+                name: "Chintala Venkataramana Temple",
+                description: "A beautiful temple dedicated to Lord Vishnu, known for its spiritual atmosphere.",
+                img: "https://s7ap1.scene7.com/is/image/incredibleindia/chintala-venkatramana-swamy-temple-anantpur-andhra-pradesh-1-attr-hero?qlt=82&ts=1726744002826",
+                imgAlt: "Colorful Hindu temple with detailed sculptures and decorative elements",
+                moreInfo: "/home/pravalika/Desktop/temple22.html"
+            },
+            {
+                category: "temples",
+                name: "BUGGA RAMALINGESWARA SWAMY TEMPLE,",
+                description: "An ancient temple dedicated to Lord Shiva, known for its historical significance.",
+                img: "https://utsav.gov.in/public/uploads/event_cover_image/event_1945/1709277102842921113.jpeg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/temple23.html"
+            },
+            {
+                category: "temples",
+                name: "kadiri lakshmi narasimha swami temple",
+                description: "An ancient temple dedicated to Lord Narsimha, known for its historical significance.",
+                img: "https://www.trawell.in/admin/images/upload/712214553Anantapur_Kadiri_Lakshmi_Narasimha_Temple_Main.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/temple24.html"
+            },
+            {
+                category: "temples",
+                name: "kasivisveswara swamy temple",
+                description: "An ancient temple dedicated to Lord Shiva, known for its historical significance.",
+                img: "https://www.tirupatihelps.com/wp-content/uploads/2022/09/buggakumbabhishekam1.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/temple25.html"
+            },
+            {
+                category: "temples",
+                name: "suraya narayana swamy temple ",
+                description: "An ancient temple dedicated to Lord Shiva, known for its historical significance.",
+                img: "https://holyshrines.in/wp-content/uploads/2016-12/Budagavi4-copy.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/temple26.html"
+            },
+            {
+                category: "temples",
+                name: "prasanna venkataramana swamy temple",
+                description: "An ancient temple dedicated to Lord Venkataramana, known for its historical significance.",
+                img: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nq4hbmPWiN5KGU5syprKujqMTnufV5qfYC4ErLUDD1SdQnjyJcBa96dt9FNrXmFyFo1AcmDIvr0z6NchDDoMPhIb2EYNhLTpCHuQNPDNqzFwtcUoeFy0suZczDSA1lcKRr3ed18=s680-w680-h510-rw",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/temple27.html"
+            },
+            {
+                category: "temples",
+                name: "Neetikanti veera anajaneya swamy temple",
+                description: "An ancient temple dedicated to Lord Hanuman, known for its historical significance.",
+                img: "https://cdn.s3waas.gov.in/s333e8075e9970de0cfea955afd4644bb2/uploads/2024/09/2024091344-768x240.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/temple28.html"
+            },
+            {
+                category: "temples",
+                name: "Aluru kona ranganatha swamy temple",
+                description: "An ancient temple dedicated to Lord Shiva, known for its historical significance.",
+                img: "https://www.pilgrimaide.com/image/cache/catalog/Blogs/Aluru%20Kona%20Ranganathaswamy%20Temple-335x200w.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/temple29.html"
+            },
+            {
+                category: "temples",
+                name: "subramanyeshwara swamy temple",
+                description: "An ancient temple dedicated to Lord Shiva, known for its historical significance.",
+                img: "https://lh3.googleusercontent.com/p/AF1QipOeKrBIGNEHyf1a9WNGyJpUOWNrJUXRJjH1yrPt=w408-h306-k-no",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/temple210.html"
+            },
+            {
+                category: "temples",
+                name: "Iskon temple ananthapuram",
+                description: "A temple dedicated to Lord krishna, known for its historical significance.",
+                img: "https://travelsetu.com/apps/uploads/new_destinations_photos/destination/2024/01/01/986f0c595347224902a7882ff79d9afe_1000x1000.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/temple211.html"
+            },
+            {
+                category: "temples",
+                name: "penukonda fort temples",
+                description: "An ancient hill temples, known for its historical significance.",
+                img: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nqEQRS6BZdczEJK_onrLHdDei6gOGyAbE6w1xA6xL8YI1nhIlHks5Os3r39Ca77JL3EvHVb_IPzAz9RTaKEFJzUMo8Quxb-w5SewJuxLcAJWbaWXU6SGIJXK36oYDbwjIzhIBl8=w408-h306-k-no",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/temple212.html"
+            },
+            {
+                category: "temples",
+                name: "Madhavaraya temple",
+                description: "An ancient temple dedicated to Lord Shiva, known for its historical significance.",
+                img: "https://gotirupathi.wordpress.com/wp-content/uploads/2015/12/madhavaraya-temple-gorantla10-copy.jpg?w=900",
+                moreInfo: "/home/pravalika/Desktop/temple213.html"
+            },
+            {
+                category: "temples",
+                name: "Muradi Anjaneya Swami Temple",
+                description: "An ancient temple dedicated to Lord Hanuman, known for its historical significance.",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_QB9hJDFkymioci3w1ZFO6O-KVP5qEW6OE1PaEwgzxaGlaWUNJI2WOuoH00NHSuJkBxA&usqp=CAU",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/temple214.html"
+            },
+            {
+                category: "temples",
+                name: "Nemakallu anjaneya temple",
+                description: "An ancient temple dedicated to Lord hanuman, known for its historical significance.",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdMhJ8LBzyfFEs3sBE8EFZ88Ckmx_h5Hxb_Q&s",
+                moreInfo: "/home/pravalika/Desktop/temple215.html"
+            },
+            {
+                category: "temples",
+                name: "Sri Bairava Swamy Temple",
+                description: "An ancient temple dedicated to Lord Shiva, known for its historical significance.",
+                img: "https://content.jdmagicbox.com/v2/comp/anantapur/t6/9999p8554.8554.180225070002.a4t6/catalogue/shri-kala-bhairava-swamy-temple-siddarampuram-anantapur-temples-BpQE3H7vcx-250.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/temple216.html"
+            },
+            {
+                category: "tourist-places",
+                name: "Thimmamma Marrimanu",
+                description: "A beautiful hill station with scenic views and pleasant climate.",
+                img:"https://static.toiimg.com/thumb/86184877/Thimmamma.jpg?width=1200&height=900",
+                imgAlt: "Scenic hill station with green mountains and misty valleys",
+                moreInfo: "/home/pravalika/Desktop/tourist place 21.html"
+            },
+            {
+                category: "tourist-places",
+                name: "Anantapur Clock Tower",
+                description: "Popular trekking destination with waterfalls and natural beauty.",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKg8WZk-faRo45XGswzlRdfcZuuTUmZ1zxQg&s",
+                imgAlt: "Green hills with trekking paths and natural scenery",
+                moreInfo: "/home/pravalika/Desktop/tourist place 22.html"
+            },
+            {
+                category: "tourist-places",
+                name: "Puttaparthi (Prasanthi Nilayam)",
+                description: "Popular trekking destination with waterfalls and natural beauty.",
+                img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8OdOBXAxfGqVtocIfK5Y0mjeiK2FeP_-jFQ&s",
+                imgAlt: "Green hills with trekking paths and natural scenery",
+                moreInfo: "/home/pravalika/Desktop/tourist place 23.html"
+            },
+            {
+                category: "tourist-places",
+                name: "Nimmalakunta ananthapur",
+                description: "Popular trekking destination with waterfalls and natural beauty.",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPR_9isRFdly3zro1k0TfD1GtOM4Mns0A2sQ&s",
+                imgAlt: "Green hills with trekking paths and natural scenery",
+                moreInfo: "/home/pravalika/Desktop/tourist place 24.html"
+            },
+            {
+                category: "forts",
+                name: "Penukonda fort",
+                description: "Historic fort with panoramic views and rich history.",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCNm_5VMfTgWbDctCmGnoFyBzMVUnfkisJDA&s",
+                imgAlt: "Ancient stone fort on a hill with historical architecture",
+                moreInfo: "/home/pravalika/Desktop/forts 21.html"
+            },
+            {
+                category: "forts",
+                name: "Gooty fort",
+                description: "A majestic fort surrounded by hills and greenery.",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPDD2GgY-HzxmllgwgdsBLPHeldWEj7Z0eDA&s",
+                imgAlt: "Historic hill fort with stone walls and strategic location",
+                moreInfo: "/home/pravalika/Desktop/forts 22.html"
+            },
+             {
+                category: "forts",
+                name: "Rayadurg fort",
+                description: "A majestic fort surrounded by hills and greenery.",
+                img:"https://lh3.googleusercontent.com/gps-cs-s/AC9h4np9RU2rIXuZjvtKYCe26-N-Y81O3xyLaEMkQ15XHbbRNzcOgMLP8WDfhOqQjav03DhA3cPzgwyfqNuGz534p9OejV5sK_YIuvRz-JpdwZMPPiuvDLqLPoBlfv7S2h7ODY9-6CRx=w424-h240-k-no",
+                imgAlt: "Historic hill fort with stone walls and strategic location",
+                moreInfo: "/home/pravalika/Desktop/forts 23.html"
+            },
+            {
+                category: "forts",
+                name: "Madakasira Fort",
+                description: "A majestic fort surrounded by hills and greenery.",
+                img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLrB18YJdiFwfBFlq3B82Qepo6ud_n2PGAeA&",
+                imgAlt: "Historic hill fort with stone walls and strategic location",
+                moreInfo: "/home/pravalika/Desktop/forts 24.html"
+            },
+            {
+                category: "waterfalls",
+                name: "Konauppalapadu Kona Falls",
+                description: "Spectacular waterfall surrounded by lush rainforest.",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQum2hHa2elprcIYut0RBcDNZP92Jn9sQJ1Lg&s",
+                imgAlt: "Majestic waterfall cascading down rocky cliffs into a misty pool",
+                moreInfo: "/home/pravalika/Desktop/waterfalls 21.html"
+            },
+              {
+                category: "caves",
+                name: "yadiki caves",
+                description: "A majestic caves surrounded by hills and greenery.",
+                img: "https://content.jdmagicbox.com/v2/comp/goa/r9/0832px832.x832.181128081415.s5r9/catalogue/rivona-natural-cave-2-rivona-goa-caves-CAEGt7YFia.jpg",
+                imgAlt: "Historic hill fort with stone walls and strategic location",
+                moreInfo: "/home/pravalika/Desktop/caves 21.html"
+            }, 
+          ];
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        const searchInput = document.getElementById('search-input');
+        const destinationsGrid = document.getElementById('destinations-grid');
+        let selectedCategories = new Set(['all']);
+        let searchTerm = '';
+
+        function updateDestinations() {
+            destinationsGrid.innerHTML = '';
+            
+            const filtered = destinations.filter(dest => {
+                const categoryMatch = selectedCategories.has('all') || selectedCategories.has(dest.category);
+                const searchMatch = searchTerm === '' || 
+                                  dest.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                                  dest.description.toLowerCase().includes(searchTerm.toLowerCase());
+                return categoryMatch && searchMatch;
+            });
+            
+            if (filtered.length === 0) {
+                destinationsGrid.innerHTML = '<p class="text-center col-span-full text-gray-500 py-8">No destinations found matching your criteria.</p>';
+                return;
+            }
+            
+            filtered.forEach(dest => {
+                const card = document.createElement('div');
+                card.className = 'card bg-white rounded-lg shadow-md overflow-hidden';
+                card.innerHTML = `
+                    <div class="card-image">
+                        <img src="${dest.img}" alt="${dest.imgAlt}" class="w-full h-48 object-cover" loading="lazy" />
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold mb-2 capitalize">${dest.name}</h3>
+                        <p class="text-gray-600 mb-2">${dest.description}</p>
+                        <a href="${dest.moreInfo}" target="_blank" rel="noopener noreferrer" class="more-info">More Info</a>
+                        <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full capitalize ml-2">${dest.category}</span>
+                    </div>
+                `;
+                destinationsGrid.appendChild(card);
+            });
+        }
+
+        // Category button event listeners
+        categoryButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const category = btn.dataset.category;
+                
+                if (category === 'all') {
+                    selectedCategories.clear();
+                    selectedCategories.add('all');
+                    categoryButtons.forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                } else {
+                    selectedCategories.delete('all');
+                    if (selectedCategories.has(category)) {
+                        selectedCategories.delete(category);
+                        btn.classList.remove('selected');
+                        
+                        // If no categories selected, show all
+                        if (selectedCategories.size === 0) {
+                            selectedCategories.add('all');
+                            document.querySelector('[data-category="all"]').classList.add('selected');
+                        }
+                    } else {
+                        selectedCategories.add(category);
+                        btn.classList.add('selected');
+                    }
+                }
+                
+                updateDestinations();
+            });
+        });
+
+        // Search functionality
+        searchInput.addEventListener('input', (e) => {
+            searchTerm = e.target.value;
+            updateDestinations();
+        });
+
+        // Initialize with all destinations
+        document.querySelector('[data-category="all"]').classList.add('selected');
+        updateDestinations();
+    </script>
+</body>
+</html>

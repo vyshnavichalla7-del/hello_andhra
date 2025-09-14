@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Travel Destination Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(to right, #f3f4f6, #e5e7eb);
+            font-family: 'Inter', sans-serif;
+        }
+        .card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .category-btn {
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .category-btn.selected {
+            background-color: #3b82f6;
+            color: white;
+        }
+        .search-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+        }
+        a.more-info {
+            color: #2563eb;
+            font-weight: 600;
+            text-decoration: underline;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+        a.more-info:hover {
+            color: #1d4ed8;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="bg-gradient-to-r from-blue-500 to-purple-600 text-white py-8">
+        <div class="container mx-auto text-center px-4">
+            <h1 class="text-4xl font-bold mb-2">Explore Travel Destinations</h1>
+            <p class="text-lg max-w-3xl mx-auto">
+                Discover amazing temples, tourist spots, beaches, caves, forts, and waterfalls
+            </p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <section class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+            <div>
+                <h2 class="text-2xl font-semibold mb-4">Choose Your Interests</h2>
+                <div class="flex flex-wrap gap-2">
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="all">All</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="temples">Temples</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="tourist-places">Tourist Places</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="forts">Forts</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="waterfalls">Waterfalls</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="beaches">Beaches</button>
+                    <button class="category-btn bg-white shadow-md px-4 py-2 rounded-lg text-gray-700 font-medium" data-category="caves">Caves</button>
+                </div>
+            </div>
+            <div class="w-full md:w-64">
+                <input type="text" id="search-input" placeholder="Search destinations..." class="search-input w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-blue-500" />
+            </div>
+        </section>
+
+        <section class="destinations">
+            <div id="destinations-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-6 mt-12">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2025 Travel Destination Explorer. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const destinations = [
+            // Temples
+            {
+                category: "temples",
+                name: "Iskon Temple Rajahmundry",
+                description: "One of the most important places to visit in Rajahmundry, ISKCON Temple is one the largest ISKCON temples in the world. Idols of Lord Krishna and Goddess Radha at the temple are mesmerising and are adorned richly. Its architectural beauty is equally enticing",
+                img: "https://travelsetu.com/apps/uploads/new_destinations_photos/destination/2024/01/01/6aaa98de2021f806f3465e20f4fd3242_1000x1000.png",
+                imgAlt: "Golden temple structure with intricate carvings and tall gopuram against blue sky",
+                moreInfo: "/home/pravalika/Desktop/tem1.html"
+            },
+            {
+                category: "temples",
+                name: "First Tirupati Temple",
+                description: "this temple is located in the village of Divili, near Samarlakota, and is known as the Sri Srungara Vallabha Swamy Temple, believed to be the first Tirupati where Lord Vishnu appeared. Dedicated to Sri Srungara Vallabha Swamy, a manifestation of Lord Vishnu",
+                img: "https://assets.thehansindia.com/h-upload/2020/12/10/1017624-temple.jpg",
+                imgAlt: "Colorful Hindu temple with detailed sculptures and decorative elements",
+                moreInfo: "/home/pravalika/Desktop/tem2.html"
+            },
+            {
+                category: "temples",
+                name: "Kondrakota Nukalamma temple",
+                description: "kandrakota is a famous pilgrim station. Here goddess Nookalamma temple is located. From Ugadi there celebrated jatara over 45 days.",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpX_RtXstBVxbCWOQebIhk32i472kNLeh84g&s",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/tem3.html"
+            },
+            {
+                category: "temples",
+                name: "Subrahmanya Temple in thadipathri",
+                description: "The Thadipathi Subramanya Temple is located in the East Godavari district of Andhra Pradesh, and is a significant pilgrimage site for devotees of Lord Subrahmanya (Muruga).",
+                img: "https://temple.yatradham.org/public/Product/temple/temple_O7rCpU1g_202307151116260.webp",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/tem4.html"
+            },
+            {
+                category: "temples",
+                name: "Annavaram Temple",
+                description: "The Annavaram temple, dedicated to Lord Veera Venkata Satyanarayana Swamy, is a famous Hindu shrine located atop Ratnagiri Hill in the East Godavari district of Andhra Pradesh, near the Pampa River.",
+                img: "https://mountainvalley.in/assets/images/annavaram-temple-1000x504-800x403.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/tem5.html"
+            },
+            {
+                category: "temples",
+                name: "Draksharamam Temple",
+                description: "The Draksharamam Temple in the East Godavari district is a significant religious site housing Sri Bhimeswara Swamy and Manikyamba Devi, considered one of the sacred Pancharama Kshetras and a Shakti Peetha.",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-Sw531XxF0bNYxmqifgDrxQAfBHijd1GZ8Mo9ceSgHo7rKf_5J0IlS8db6cn3VNN8QDc&usqp=CAU",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/tem6.html"
+            },
+            {
+                category: "temples",
+                name: "Sri venkateswara Temple Vadapalli",
+                description: "The Sri Venkateswara Swamy Temple at Vadapalli, located on the banks of the Godavari River in Andhra Pradesh's East Godavari district, is a significant pilgrimage site known for its connection to Kalyana Venkateswara and its annual festivals.",
+                img: "https://famoustemplesofindia.com/wp-content/uploads/2024/02/Vadapalli-Temple-of-Sri-Venkateswara-Swamy-1.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/tem7.html"
+            },
+            {
+                category: "temples",
+                name: "Sri  Jaganmohini Kesava Swamy Temple",
+                description: "The Sri Jaganmohini Kesava Swamy Temple in Ryali, East Godavari district, is a unique temple dedicated to Lord Vishnu, famous for its single black stone idol depicting Keshava Swamy on the front and the female form of Jagan Mohini on the back, a rare feat of sculptural skill.",
+                img: "https://content3.jdmagicbox.com/comp/east-godavari/x2/9999px883.x883.180101184917.h4x2/catalogue/jaganmohini-kesava-swami-temple-ryali-east-godavari-temples-47mtosfcgr.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/tem8.html"
+            },
+            {
+                category: "temples",
+                name: "Sri Lakshmi Narasimha Swamy Temple",
+                description: "The Sri Lakshmi Narasimha Swamy Temple in Antarvedi, East Godavari, is a revered pilgrimage site where the sacred Godavari River meets the Bay of Bengal. Built between the 15th and 16th centuries, it is dedicated to Lord Narasimha, the Narasimha incarnation of Lord Vishnu.",
+                img: "https://hindupost.in/wp-content/uploads/2021/05/antarvedi.png",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/tem9.html"
+            },
+            {
+                category: "temples",
+                name: "Kotipalli Temple",
+                description: "The Sri Someswara Swamy Temple in Kotipalli, East Godavari, is a significant Shiva pilgrimage site on the banks of the Godavari River. It features a unique, 5-foot tall crystal Someswara Lingam installed by Lord Chandra that appears to glow with the phases of the moon.",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEzU1Ey5YKfxTShD_rXdx0ZrM_DEAxFoOFhA&s",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/tem10.html"
+            },
+            {
+                category: "temples",
+                name: "Appanapalli Temple",
+                description: "The Sri Bala Balaji Devasthanam is a significant Hindu temple in Appanapalli, East Godavari, known as the Tirupati of Konaseema located on the banks of the Godavari River.",
+                img: "https://touringwithpk.com/wp-content/uploads/2021/06/dindi-055a.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/tem11.html"
+            },
+            {
+                category: "temples",
+                name: "Sri Siddhi Vinayaka Temple",
+                description: "The Ainavilli temple, officially the Sri Siddhi Vinayaka Swamy Temple, is a famous ancient and popular swayambhoo (self-manifested) shrine in the Konaseema area of East Godavari, Andhra Pradesh. Devotees believe the idol was installed by Vyasa Maharshi and is known as a wish-fulfilling Siddhi Vinayaka",
+                img: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/11/e0/74/65/ainavilli-siddhi-vinayaka.jpg?w=800&h=-1&s=1",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/tem12.html"
+            },
+            {
+                category: "temples",
+                name: "Thalupulamma Thalli Temple",
+                description: "The Thalupulamma Talli temple is a sacred shrine located in the East Godavari district of Andhra Pradesh, situated between two lush, forested hillocks, Darakonda and Teegakonda",
+                img: "https://www.go2india.in/ap/images/talupulammatalli5.JPG",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/tem13.html"
+            },
+            {
+                category: "temples",
+                name: "Andhra Sabharimala Temple",
+                description: "The Andhra Sabarimala, or Sree Dharma Sastha Temple, located in the East Godavari district of Andhra Pradesh, is a significant Lord Ayyappa shrine often called the Sabarimala of Andhra due to its prominence as a pilgrimage destination for devotees of Lord Ayyappa in the state.",
+                img:"https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhBDbQTA-hGTK8J-erkk0W7X9ZLUzz4xt-PaRUo1lg4bbR6s6BtzNh1psFYaU54wBQ9w37ytPSxxfuLT8-VbHg-qTlvJ9hJKRKjAlVJZAOMBsCiJf4hkilHRrrsfKcpVCfXrPsQ-d1rA0Y/w1200-h630-p-k-no-nu/Ayyappa+Swamy+Temple+Dwarapudi28+Copy.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/tem14.html"
+            },
+            {
+                category: "temples",
+                name: "Peddhapuram Maridamma Temple",
+                description: "Peddapuram maridamma jhatara is very famous in east godavari,the godesses is very powerful,the villagers are very trusted towards her",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIvLL7-SBKDIjZGxZgvvzZcCLwesKtwWzBkg&s",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/tem15.html"
+            },
+            {
+                category: "temples",
+                name: "Datta Temple",
+                description: "The primary Datta temple in East Godavari is the Sripada Vallabha Anagha Datta Kshethram in Pithapuram. Dedicated to Lord Dattatreya, who embodies Brahma, Vishnu, and Shiva, the temple is a significant pilgrimage site known for its spiritual importance and is a popular destination, especially during Datta Jayanti. It offers spiritual services and religious facilities, with a wheelchair-accessible entrance",
+                img: "https://sannidhi.net/wp-content/uploads/2024/01/pithapuram0.png",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/tem16.html"
+            },
+            {
+                category: "temples",
+                name: "sri kukkuteswara swamy Temple",
+                description: "The Kukkuteswara Temple or Sri Kukkuteswara Swami Temple is a Hindu temple in Pitapuram town of Kakinada district, Andhra Pradesh, India. The temple is prominent in both Saivite and Shakta Hindu traditions. It is one of the eighteen Maha Shakta pithas considered the most significant pilgrimage destinations in Shaktism.",
+                img: "https://content3.jdmagicbox.com/comp/east_godavari/s1/9999px883.x883.180101192357.c1s1/catalogue/kukkuteswara-swamy-temple-pithapuram-east-godavari-temples-foc3nhkwfi.jpg",
+                imgAlt: "Ancient stone temple with intricate carvings and spiritual ambiance",
+                moreInfo: "/home/pravalika/Desktop/tem17.html"
+            },
+            {
+                category: "tourist-places",
+                name: "Papikondalu Hills",
+                description: "Papikondalu is a picturesque mountain range and a popular tourist destination in Andhra Pradesh, located along the winding Godavari River, with a unique shape resembling the partition in a woman's hair, hence its name",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyweoMxm3SJ6bp6LwBLALbZx9EPzpnexv7cQ&s",
+                imgAlt: "Scenic hill station with green mountains and misty valleys",
+                moreInfo: "/home/pravalika/Desktop/hill1.html"
+            },
+            {
+                category: "tourist-places",
+                name: "Corangi Wildlife Sanctuary",
+                description: "Coringa Wildlife Sanctuary is a vast 235 sq km tidal mangrove forest in Andhra Pradesh's East Godavari district, renowned as India's third-largest mangrove forest and a vital habitat for diverse wildlife. Visitors can explore this unique ecosystem, which includes numerous mangrove species, various birds like kingfishers and herons, estuarine crocodiles, and acts as a breeding ground for Olive Ridley turtles",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDjbJ62fg5FaIPLoUtygMoN1dyhY5eHuyIgA&s",
+                imgAlt: "Green hills with trekking paths and natural scenery",
+                moreInfo: "/home/pravalika/Desktop/co.html"
+            },
+            {
+                category: "beaches",
+                name: "kakinada beach",
+                description: "The village of Kakinada is home to an expansive beach. You may relax here whether you're a lone traveller, an adventurous couple, or a family with kids. In addition to being a dream location for photographers and wildlife enthusiasts, the area is also known for its breathtaking sunset and dawn views.",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqjLG48AI8MdUchcJREz_52mfHvEYEUnvuRA&s",
+                imgAlt: "Majestic waterfall cascading down rocky cliffs into a misty pool",
+                moreInfo: "/home/pravalika/Desktop/be1.html"
+            },
+            {
+                category: "beaches",
+                name: "Antarvedi Beach",
+                description: "Antarvedi Beach is a scenic spot in the Dr. B. R. Ambedkar Konaseema district of Andhra Pradesh, India, where the Godavari River's distributary, the Vashista River, meets the Bay of Bengal. It offers a picturesque and tranquil escape with coconut plantations lining the road leading to it. The beach is known for its natural beauty and is a peaceful destination",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR24ZgG_-aS9-4MfAW7S8tL9uBiI9uu88HXqg&s",
+                imgAlt: "Historic hill fort with stone walls and strategic location",
+                moreInfo: "/home/pravalika/Desktop/be2.html"
+            },
+              {
+                category: "beaches",
+                name: "Yanam Beach",
+                description: "Yanam Beach is a scenic river beach located where the Gowthami Godavari and Coringa rivers meet the Bay of Bengal, offering a peaceful environment with lush coconut trees, boating facilities, and a view of the unique confluence.",
+                img: "https://www.touristplaces.net.in/images/pp/6/p127496bho.jpg",
+                imgAlt: "Historic hill fort with stone walls and strategic location",
+                moreInfo: "/home/pravalika/Desktop/be3.html"
+            },
+              {
+                category: "beaches",
+                name: "Odalarevu Beach",
+                description: "Odalarevu Beach in East Godavari is a peaceful, calm location known for its picturesque views of oil rigs and the ONGC onshore terminal, though it lacks amenities like shops and resorts. It's a good spot for a relaxing visit, with some visitors appreciating the tranquility, while others are disappointed by the absence of facilities.",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRYqmjPaHP6egZbS-PDi2NKNQRYn_MPrLvXA&s",
+                imgAlt: "Historic hill fort with stone walls and strategic location",
+                moreInfo: "/home/pravalika/Desktop/be4.html"
+            },
+              {
+                category: "beaches",
+                name: "Addhariperta Beach",
+                description: "Addharipeta beach bridge is one of the best attractions near to kakinada samart city. There are more beautiful places located in and around kakinada smart city. Its is located 50kms far from kakinada beach",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAByMGBfpJaHTIkQGEq1ZJuiRVDOBQqo_Jw&s",
+                imgAlt: "Historic hill fort with stone walls and strategic location",
+                moreInfo: "/home/pravalika/Desktop/be5.html"
+            },
+             {
+                category: "beaches",
+                name: "Uppada Beach",
+                description: "Uppada Beach, with its golden sands and clear blue waters, is a popular tourist spot. While there's no specific historical story associated with the beach, it's famous for its wide shoreline and gentle waves, making it a perfect spot for leisurely walks and picnics.",
+                img: "https://content.jdmagicbox.com/v2/comp/visakhapatnam/k7/0891px891.x891.220320230236.k1k7/catalogue/pedhatheenarla-beach-visakhapatnam-beaches-xebzH3kH2w.jpg",
+                imgAlt: "Historic hill fort with stone walls and strategic location",
+                moreInfo: "/home/pravalika/Desktop/be6.html"
+            },
+             {
+                category: "waterfalls",
+                name: "Dharapalli waterfalls",
+                description: "Dharapalli Waterfall, also known as Darapalli Falls, is a scenic waterfall in Andhra Pradesh's East Godavari district, located in a dense forest area near the village of Dharapalli.",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKZG3Ho39Yovi-Vh5HYXP1HBjC9sXGpBNCbLlt0nq4oGAJGtAEWVd5aktgoAPURGHJgBc&usqp=CAU",
+                imgAlt: "Historic hill fort with stone walls and strategic location",
+                moreInfo: "/home/pravalika/Desktop/wat1.html"
+            },
+            {
+                category: "waterfalls",
+                name: "Rampa waterfalls",
+                description: "Waterfalls In East Godavari: Exploring The Dripping Beauties Rampa Waterfalls, located in a dense jungle near Rampachodavaram in the East Godavari district, is a picturesque, shallow waterfall known for its cool waters and the ancient Sri Neelakantheshwara Temple nearby.",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKriykRk2KtcRK2ev0tAGLmXC_sA78fUmV9A&s",
+                imgAlt: "Historic hill fort with stone walls and strategic location",
+                moreInfo: "/home/pravalika/Desktop/wat2.html"
+            },
+            {
+                category: "waterfalls",
+                name: "Erakampalem waterfalls",
+                description: "Erakampalem Waterfalls is a serene and beautiful cascade in East Godavari, known for its clear waters and lush green surroundings, offering an invigorating natural escape for nature lovers and adventure seekers.",
+                img: "https://images.mindtrip.ai/attractions/2886/31c6/37c8/4cdf/1137/b078/d8ed/95e6",
+                imgAlt: "Historic hill fort with stone walls and strategic location",
+                moreInfo: "/home/pravalika/Desktop/wat3.html"
+            },
+            {
+                category: "waterfalls",
+                name: "Maredumilli waterfalls",
+                description: "Maredumilli is a village in Maredumilli Mandal in Alluri Sitharama Raju district in the state of Andhra Pradesh in India. It is 90 km from Rajahmundry city. It has many waterfalls and beautiful locations.",
+                img: "https://tripxl.com/blog/wp-content/uploads/2024/09/Jalatarangini-Waterfalls.jpg",
+                imgAlt: "Historic hill fort with stone walls and strategic location",
+                moreInfo: "/home/pravalika/Desktop/wat4.html"
+            },
+            
+          ];
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        const searchInput = document.getElementById('search-input');
+        const destinationsGrid = document.getElementById('destinations-grid');
+        let selectedCategories = new Set(['all']);
+        let searchTerm = '';
+
+        function updateDestinations() {
+            destinationsGrid.innerHTML = '';
+            
+            const filtered = destinations.filter(dest => {
+                const categoryMatch = selectedCategories.has('all') || selectedCategories.has(dest.category);
+                const searchMatch = searchTerm === '' || 
+                                  dest.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                                  dest.description.toLowerCase().includes(searchTerm.toLowerCase());
+                return categoryMatch && searchMatch;
+            });
+            
+            if (filtered.length === 0) {
+                destinationsGrid.innerHTML = '<p class="text-center col-span-full text-gray-500 py-8">No destinations found matching your criteria.</p>';
+                return;
+            }
+            
+            filtered.forEach(dest => {
+                const card = document.createElement('div');
+                card.className = 'card bg-white rounded-lg shadow-md overflow-hidden';
+                card.innerHTML = `
+                    <div class="card-image">
+                        <img src="${dest.img}" alt="${dest.imgAlt}" class="w-full h-48 object-cover" loading="lazy" />
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold mb-2 capitalize">${dest.name}</h3>
+                        <p class="text-gray-600 mb-2">${dest.description}</p>
+                        <a href="${dest.moreInfo}" target="_blank" rel="noopener noreferrer" class="more-info">More Info</a>
+                        <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full capitalize ml-2">${dest.category}</span>
+                    </div>
+                `;
+                destinationsGrid.appendChild(card);
+            });
+        }
+
+        // Category button event listeners
+        categoryButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const category = btn.dataset.category;
+                
+                if (category === 'all') {
+                    selectedCategories.clear();
+                    selectedCategories.add('all');
+                    categoryButtons.forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                } else {
+                    selectedCategories.delete('all');
+                    if (selectedCategories.has(category)) {
+                        selectedCategories.delete(category);
+                        btn.classList.remove('selected');
+                        
+                        // If no categories selected, show all
+                        if (selectedCategories.size === 0) {
+                            selectedCategories.add('all');
+                            document.querySelector('[data-category="all"]').classList.add('selected');
+                        }
+                    } else {
+                        selectedCategories.add(category);
+                        btn.classList.add('selected');
+                    }
+                }
+                
+                updateDestinations();
+            });
+        });
+
+        // Search functionality
+        searchInput.addEventListener('input', (e) => {
+            searchTerm = e.target.value;
+            updateDestinations();
+        });
+
+        // Initialize with all destinations
+        document.querySelector('[data-category="all"]').classList.add('selected');
+        updateDestinations();
+    </script>
+</body>
+</html>
